@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using BveEx.PluginHost.Plugins;
 using BveEx.PluginHost.Plugins.Extensions;
 
-namespace BveExCsTemplate.Extension
+namespace Bve2Tims
 {
     /// <summary>
     /// プラグインの本体
