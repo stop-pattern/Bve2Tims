@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "dependencies": {
+    ".NETFramework,Version=v4.8": {
+      "BveEx.CoreExtensions": {
+        "type": "Direct",
+        "requested": "[2.0.0, )",
+        "resolved": "2.0.0",
+        "contentHash": "GEjHTJbW9BiDOXVBsvwtX9TpNF3l9uzvjXgPicHhp/dOWheJwWLVQQFFEEwHQPuSPIOu4uWEwBJc8xUPtCsTcg==",
+        "dependencies": {
+          "BveEx.PluginHost": "2.0.0"
+        }
+      },
+      "BveEx.PluginHost": {
+        "type": "Transitive",
+        "resolved": "2.0.0",
+        "contentHash": "kH1aCuUFISW1/LFyNx1Jm0Y3j9evwzw+w7LLJ+ZUagA4FGLGDRdwPVsa5/vGaySwhOWDXPQdOAi0d0stB2KeZg=="
+      }
+    }
+  }
+}
