@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace BveExCsTemplate.Extension
+namespace Bve2Tims
 {
     /// <summary>
     /// SettingWindow.xaml の相互作用ロジック
