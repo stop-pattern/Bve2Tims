@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BveEx.Extensions.ContextMenuHacker;
 using BveEx.PluginHost.Plugins;
 using BveEx.PluginHost.Plugins.Extensions;
 
@@ -26,6 +27,17 @@ namespace Bve2Tims
         public override string Description { get; } = "BVEとTIMSソフトを連携";
 
         /// <summary>
+        /// 右クリックメニュー操作用
+        /// ContextMenuHacker
+        /// </summary>
+        private IContextMenuHacker cmx;
+
+        /// <summary>
+        /// 右クリックメニューの設定ボタン
+        /// </summary>
+        private ToolStripMenuItem setting;
+
+        /// <summary>
         /// プラグインの有効・無効状態
         /// </summary>
         private bool status = true;
@@ -45,6 +57,8 @@ namespace Bve2Tims
         {
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
             Debug.AutoFlush = true;
+
+            Extensions.AllExtensionsLoaded += AllExtensionsLoaded;
         }
 
         /// <summary>
@@ -66,5 +80,13 @@ namespace Bve2Tims
                 // 処理を実装
             }
         }
+
+        private void AllExtensionsLoaded(object sender, EventArgs e)
+        {
+            cmx = Extensions.GetExtension<IContextMenuHacker>();
+
+            setting = cmx.AddCheckableMenuItem("TIMS連携設定", MenuItemCheckedChanged, ContextMenuItemType.CoreAndExtensions);
+        }
+
     }
 }
