@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
-    <RootNamespace>BveExCsTemplate.Extension</RootNamespace>
+    <RootNamespace>Bve2Tims</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Deterministic>false</Deterministic>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
