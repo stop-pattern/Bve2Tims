@@ -19,6 +19,11 @@ namespace Bve2Tims
     [Togglable]
     internal class ExtensionMain : AssemblyPluginBase, ITogglableExtension, IExtension
     {
+        /// <inheritdoc/>
+        public override string Title { get; } = "TIMS連携";
+        /// <inheritdoc/>
+        public override string Description { get; } = "BVEとTIMSソフトを連携";
+
         /// <summary>
         /// プラグインの有効・無効状態
         /// </summary>
