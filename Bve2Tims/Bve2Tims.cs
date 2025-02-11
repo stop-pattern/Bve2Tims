@@ -58,13 +58,13 @@ namespace Bve2Tims
         /// <summary>
         /// ユニットのpanelインデックス
         /// </summary>
-        private readonly int[] unitIndexes = new int[] { 0, 0, 0 };
+        private readonly int[] unitIndexes = new int[] { -1, -1, -1 };
         //private readonly int[] unitIndexes = new int[] { 213, 214, 215 };
 
         /// <summary>
         /// ドアのpanelインデックス
         /// </summary>
-        private readonly int[] doorIndexes = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        private readonly int[] doorIndexes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 
         #endregion
 
