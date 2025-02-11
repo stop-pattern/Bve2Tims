@@ -308,7 +308,7 @@ namespace Bve2Tims
         /// <param name="destination">送信先アドレス</param>
         public UdpControl(string destination) : this()
         {
-            Connect(destination);
+            //Connect(destination);
         }
 
         /// <summary>
@@ -336,7 +336,9 @@ namespace Bve2Tims
         public void Send(string message)
         {
             byte[] sendBytes = Encoding.UTF8.GetBytes(message);
+            //client.Connect(remoteEP);
             //client.Send(sendBytes, sendBytes.Length);
+            //client.Close();
             client.BeginSend(sendBytes, sendBytes.Length, remoteEP, null, null);
         }
 
