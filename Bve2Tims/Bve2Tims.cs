@@ -90,6 +90,8 @@ namespace Bve2Tims
         {
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
             Debug.AutoFlush = true;
+
+            Extensions.AllExtensionsLoaded += AllExtensionsLoaded;
         }
 
         #endregion
