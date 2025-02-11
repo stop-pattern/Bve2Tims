@@ -148,11 +148,11 @@ namespace Bve2Tims
                 }
 
                 // ドア表示
-                foreach (var index in doorIndexes)
+                for (int i = 0; i < doorIndexes.Length; i++)
                 {
-                    if (index > 0)
+                    if (doorIndexes.ElementAt(i) > 0)
                     {
-                        message += $",{GetPanelData(index)}";
+                        message += $",{GetPanelData(doorIndexes.ElementAt(i))}";
                         continue;
                     }
                     else
@@ -168,11 +168,11 @@ namespace Bve2Tims
                             int door = 0;
                             try
                             {
-                                if (ds.GetSide(DoorSide.Right).CarDoors.ElementAt(index).IsOpen)
+                                if (ds.GetSide(DoorSide.Right).CarDoors.ElementAt(i).IsOpen)
                                 {
                                     door = 1;
                                 }
-                                else if (ds.GetSide(DoorSide.Left).CarDoors.ElementAt(index).IsOpen)
+                                else if (ds.GetSide(DoorSide.Left).CarDoors.ElementAt(i).IsOpen)
                                 {
                                     door = 2;
                                 }
