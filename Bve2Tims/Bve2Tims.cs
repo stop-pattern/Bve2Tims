@@ -179,6 +179,7 @@ namespace Bve2Tims
                             }
                             catch (ArgumentOutOfRangeException)
                             {
+                                Debug.WriteLine("ArgumentOutOfRangeException: car number is out of range");
                                 door = 0;
                             }
                             catch (Exception)
