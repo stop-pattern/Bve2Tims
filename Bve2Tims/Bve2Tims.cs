@@ -104,6 +104,10 @@ namespace Bve2Tims
         /// </summary>
         public override void Dispose()
         {
+            native.Opened -= NativeOpened;
+            native.Closed -= NativeClosed;
+
+            udpControl.Dispose();
             udpControl = null;
             native = null;
         }
