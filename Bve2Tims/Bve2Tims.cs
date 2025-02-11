@@ -120,7 +120,7 @@ namespace Bve2Tims
         {
             if (status && canSend)
             {
-                string message = $"{native.VehicleState.Location},{native.VehicleState.Speed},{(int)native.VehicleState.Time.TotalMilliseconds}";
+                string message = $"{native.VehicleState.Location},{native.VehicleState.Speed},{(int)native.VehicleState.Time.TotalMilliseconds},";
                 //string message = "";
                 //message += native.VehicleState.Location.ToString() + ",";
                 //message += native.VehicleState.Speed.ToString() + ",";
@@ -129,22 +129,26 @@ namespace Bve2Tims
                 // Unit表示
                 foreach (var index in unitIndexes)
                 {
-                    if (index < 0)
+                    if (index > 0)
                     {
-                        if (BveHacker.Scenario.Vehicle.Instruments.Electricity.MotorState.Current > 0)
+                        message += $"{GetPanelData(index)},";
+                    }
+                    else
+                    {
+                        var current = BveHacker.Scenario.Vehicle.Instruments.Electricity.MotorState.Current;
+                        if (current > 0)
                         {
-                            message += ",1";
+                            message += "1,";
                         }
-                        else if (BveHacker.Scenario.Vehicle.Instruments.Electricity.MotorState.Current < 0)
+                        else if (current < 0)
                         {
-                            message += ",2";
+                            message += "2,";
                         }
                         else
                         {
-                            message += ",0";
+                            message += "0,";
                         }
                     }
-                    message += $",{GetPanelData(index)}";
                 }
 
                 // ドア表示
@@ -152,7 +156,7 @@ namespace Bve2Tims
                 {
                     if (doorIndexes.ElementAt(i) > 0)
                     {
-                        message += $",{GetPanelData(doorIndexes.ElementAt(i))}";
+                        message += $"{GetPanelData(doorIndexes.ElementAt(i))},";
                         continue;
                     }
                     else
@@ -160,7 +164,7 @@ namespace Bve2Tims
                         DoorSet ds = BveHacker.Scenario.Vehicle.Doors;
                         if (ds.AreAllClosed)
                         {
-                            message += ",0";
+                            message += "0,";
                             continue;
                         }
                         else
@@ -186,7 +190,7 @@ namespace Bve2Tims
                             {
                                 door = 0;
                             }
-                            message += $",{door}";
+                            message += $"{door},";
                         }
                     }
                 }
