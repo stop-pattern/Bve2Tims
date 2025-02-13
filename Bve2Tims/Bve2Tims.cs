@@ -93,6 +93,10 @@ namespace Bve2Tims
             }
         }
 
+        /// <summary>
+        /// すべての拡張機能が読み込まれたときに呼ばれる
+        /// </summary>
+        /// <param name="sender"></param>
         private void AllExtensionsLoaded(object sender, EventArgs e)
         {
             cmx = Extensions.GetExtension<IContextMenuHacker>();
@@ -100,6 +104,10 @@ namespace Bve2Tims
             setting = cmx.AddCheckableMenuItem("TIMS連携設定", MenuItemCheckedChanged, ContextMenuItemType.CoreAndExtensions);
         }
 
+        /// <summary>
+        /// メニューのチェック状態が変更されたときに呼ばれる
+        /// </summary>
+        /// <param name="sender"></param>
         private void MenuItemCheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripMenuItem item)
