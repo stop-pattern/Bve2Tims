@@ -38,6 +38,11 @@ namespace Bve2Tims
         private ToolStripMenuItem setting;
 
         /// <summary>
+        /// 設定ウィンドウ
+        /// </summary>
+        private SettingWindow settingWindow;
+
+        /// <summary>
         /// プラグインの有効・無効状態
         /// </summary>
         private bool status = true;
@@ -59,6 +64,9 @@ namespace Bve2Tims
             Debug.AutoFlush = true;
 
             Extensions.AllExtensionsLoaded += AllExtensionsLoaded;
+
+            settingWindow = new SettingWindow();
+            settingWindow.Hide();
         }
 
         /// <summary>
@@ -67,6 +75,9 @@ namespace Bve2Tims
         /// </summary>
         public override void Dispose()
         {
+            settingWindow.Close();
+
+            setting.CheckedChanged -= MenuItemCheckedChanged;
         }
 
         /// <summary>
@@ -88,5 +99,15 @@ namespace Bve2Tims
             setting = cmx.AddCheckableMenuItem("TIMS連携設定", MenuItemCheckedChanged, ContextMenuItemType.CoreAndExtensions);
         }
 
+        private void MenuItemCheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is ToolStripMenuItem item)
+            {
+                if (item.Checked)
+                    settingWindow.Show();
+                else
+                    settingWindow.Hide();
+            }
+        }
     }
 }
