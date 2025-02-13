@@ -22,6 +22,7 @@ namespace Bve2Tims
         public SettingWindow()
         {
             InitializeComponent();
+            DataContext = new ViewModel();
         }
     }
 }
