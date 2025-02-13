@@ -66,6 +66,7 @@ namespace Bve2Tims
             Extensions.AllExtensionsLoaded += AllExtensionsLoaded;
 
             settingWindow = new SettingWindow();
+            settingWindow.Closing += SettingWindowClosing;
             settingWindow.Hide();
         }
 
@@ -107,6 +108,26 @@ namespace Bve2Tims
                     settingWindow.Show();
                 else
                     settingWindow.Hide();
+            }
+        }
+
+        /// <summary>
+        /// 設定ウィンドウが閉じられたときに呼ばれる
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void SettingWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (sender is SettingWindow window)
+            {
+                e.Cancel = true;
+                window.Hide();
+                setting.Checked = false;
+            }
+            else
+            {
+                throw new NotImplementedException();
             }
         }
     }
