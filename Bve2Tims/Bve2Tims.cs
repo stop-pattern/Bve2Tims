@@ -7,7 +7,9 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using BveEx.Extensions.Native;
+using BveEx.Extensions.ContextMenuHacker;
 using BveEx.PluginHost.Plugins;
 using BveEx.PluginHost.Plugins.Extensions;
 using BveTypes.ClassWrappers;
@@ -34,6 +36,22 @@ namespace Bve2Tims
         #endregion
 
         #region Fields
+
+        /// <summary>
+        /// 右クリックメニュー操作用
+        /// ContextMenuHacker
+        /// </summary>
+        private IContextMenuHacker cmx;
+
+        /// <summary>
+        /// 右クリックメニューの設定ボタン
+        /// </summary>
+        private ToolStripMenuItem setting;
+
+        /// <summary>
+        /// 設定ウィンドウ
+        /// </summary>
+        private SettingWindow settingWindow;
 
         /// <summary>
         /// プラグインの有効・無効状態
@@ -92,6 +110,10 @@ namespace Bve2Tims
             Debug.AutoFlush = true;
 
             Extensions.AllExtensionsLoaded += AllExtensionsLoaded;
+
+            settingWindow = new SettingWindow();
+            settingWindow.Closing += SettingWindowClosing;
+            settingWindow.Hide();
         }
 
         #endregion
@@ -104,6 +126,9 @@ namespace Bve2Tims
         /// </summary>
         public override void Dispose()
         {
+            settingWindow.Close();
+
+            setting.CheckedChanged -= MenuItemCheckedChanged;
             native.Opened -= NativeOpened;
             native.Closed -= NativeClosed;
 
@@ -203,16 +228,20 @@ namespace Bve2Tims
         #endregion
 
         #region Eevent Handlers
-
+        
         /// <summary>
         /// すべての拡張機能が読み込まれたときに呼ばれる
         /// </summary>
+        /// <param name="sender"></param>
         private void AllExtensionsLoaded(object sender, EventArgs e)
         {
             native = Extensions.GetExtension<INative>();
+            cmx = Extensions.GetExtension<IContextMenuHacker>();
 
             native.Opened += NativeOpened;
             native.Closed += NativeClosed;
+
+            setting = cmx.AddCheckableMenuItem("TIMS連携設定", MenuItemCheckedChanged, ContextMenuItemType.CoreAndExtensions);
         }
 
         /// <summary>
@@ -230,6 +259,41 @@ namespace Bve2Tims
         private void NativeClosed(object sender, EventArgs e)
         {
             canSend = false;
+        }
+
+        /// <summary>
+        /// メニューのチェック状態が変更されたときに呼ばれる
+        /// </summary>
+        /// <param name="sender"></param>
+        private void MenuItemCheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is ToolStripMenuItem item)
+            {
+                if (item.Checked)
+                    settingWindow.Show();
+                else
+                    settingWindow.Hide();
+            }
+        }
+
+        /// <summary>
+        /// 設定ウィンドウが閉じられたときに呼ばれる
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void SettingWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (sender is SettingWindow window)
+            {
+                e.Cancel = true;
+                window.Hide();
+                setting.Checked = false;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         #endregion
