@@ -139,9 +139,6 @@ namespace Bve2Tims
         internal Model()
         {
             destinations = new List<Udp>();
-
-            native.Opened += NativeOpened;
-            native.Closed += NativeClosed;
         }
 
         #endregion
@@ -154,7 +151,21 @@ namespace Bve2Tims
         /// <param name="native"><see cref="INative"/></param>
         internal void Initialize(INative native)
         {
+            if (native == null)
+            {
+                throw new ArgumentNullException(nameof(native));
+            }
+
+            if (this.native == null)
+            {
+                native.Opened -= NativeOpened;
+                native.Closed -= NativeClosed;
+            }
+
             this.native = native;
+
+            native.Opened += NativeOpened;
+            native.Closed += NativeClosed;
         }
 
         internal void Start()
