@@ -73,11 +73,11 @@
 
                 <TextBlock Text="Panel Index" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2"/>
 
-                <ComboBox VerticalAlignment="Center" Grid.Column="3" Grid.Row="0" SelectedItem="0">
+                <!--<ComboBox VerticalAlignment="Center" Grid.Column="3" Grid.Row="0" SelectedItem="0">
                     <ComboBoxItem Content="Default"/>
                     <ComboBoxItem Content="CT"/>
                     <ComboBoxItem Content="other"/>
-                </ComboBox>
+                </ComboBox>-->
 
                 <Label Content="Unit0" Grid.Column="1" Grid.Row="1"/>
                 <Label Content="Unit1" Grid.Column="1" Grid.Row="2"/>
