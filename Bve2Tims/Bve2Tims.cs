@@ -135,8 +135,9 @@ namespace Bve2Tims
         /// <param name="sender"></param>
         private void AllExtensionsLoaded(object sender, EventArgs e)
         {
-            native = Extensions.GetExtension<INative>();
             cmx = Extensions.GetExtension<IContextMenuHacker>();
+
+            model.Initialize(Extensions.GetExtension<INative>());
 
             setting = cmx.AddCheckableMenuItem("TIMS連携設定", MenuItemCheckedChanged, ContextMenuItemType.CoreAndExtensions);
         }

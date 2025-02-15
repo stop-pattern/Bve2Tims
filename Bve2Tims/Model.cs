@@ -174,6 +174,15 @@ namespace Bve2Tims
 
         #region Methods
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        /// <param name="native"><see cref="INative"/></param>
+        internal void Initialize(INative native)
+        {
+            this.native = native;
+        }
+
         internal void Start()
         {
             status = true;
