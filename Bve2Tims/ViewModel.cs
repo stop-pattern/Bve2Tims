@@ -11,8 +11,6 @@ using System.Runtime.CompilerServices;
 
 namespace Bve2Tims
 {
-    using Udp = Tuple<UdpClient, IPEndPoint>;
-
     internal class ViewModel : INotifyPropertyChanged
     {
         #region Fields

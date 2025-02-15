@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace Bve2Tims
 {
-    using Udp = Tuple<UdpClient, IPEndPoint>;
-
     internal class Model
     {
         #region const/static Fields
