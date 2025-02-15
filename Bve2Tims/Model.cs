@@ -232,6 +232,7 @@ namespace Bve2Tims
             //message += native.VehicleState.Time.TotalMilliseconds.ToString();
 
             // Unit表示
+            float current = native.VehicleState.Current;
             foreach (var index in unitIndexes)
             {
                 if (index > 0)
@@ -240,7 +241,6 @@ namespace Bve2Tims
                 }
                 else
                 {
-                    var current = BveHacker.Scenario.Vehicle.Instruments.Electricity.MotorState.Current;
                     if (current > 0)
                     {
                         message += "1,";
@@ -257,6 +257,7 @@ namespace Bve2Tims
             }
 
             // ドア表示
+            DoorSet ds = bveHacker.Scenario.Vehicle.Doors;
             for (int i = 0; i < doorIndexes.Length; i++)
             {
                 if (doorIndexes.ElementAt(i) > 0)
@@ -266,7 +267,6 @@ namespace Bve2Tims
                 }
                 else
                 {
-                    DoorSet ds = BveHacker.Scenario.Vehicle.Doors;
                     if (ds.AreAllClosed)
                     {
                         message += "0,";
