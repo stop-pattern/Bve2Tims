@@ -75,6 +75,10 @@ namespace Bve2Tims
             {
                 return unitIndexes;
             }
+            set
+            {
+                unitIndexes = value;
+            }
         }
 
         /// <summary>
@@ -85,6 +89,10 @@ namespace Bve2Tims
             get
             {
                 return doorIndexes;
+            }
+            set
+            {
+                doorIndexes = value;
             }
         }
 

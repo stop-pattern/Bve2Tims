@@ -239,6 +239,24 @@ namespace Bve2Tims
         #region Properties
 
         /// <summary>
+        /// ユニットインデックス
+        /// </summary>
+        internal static int[] UnitIndexes
+        {
+            get { return Model.UnitIndexes; }
+            set { Model.UnitIndexes = value; }
+        }
+
+        /// <summary>
+        /// ドアインデックス
+        /// </summary>
+        internal static int[] DoorIndexes
+        {
+            get { return Model.DoorIndexes; }
+            set { Model.DoorIndexes = value; }
+        }
+
+        /// <summary>
         /// 選択中の宛先インデックス
         /// </summary>
         public int SelectedDestinationIndex
