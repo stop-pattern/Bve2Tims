@@ -12,7 +12,7 @@ using BveTypes.ClassWrappers;
 
 namespace Bve2Tims
 {
-    internal class Model
+    public class Model
     {
         #region const/static Fields
 

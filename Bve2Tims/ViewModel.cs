@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 
 namespace Bve2Tims
 {
-    internal class ViewModel : INotifyPropertyChanged
+    public class ViewModel : INotifyPropertyChanged
     {
         #region Fields
 
@@ -305,7 +305,14 @@ namespace Bve2Tims
         public ViewModel()
         {
             model = new Model();
-            model.Destinations.Add(new Udp(new UdpClient(), new IPEndPoint(IPAddress.Loopback, Model.destinationPort)));
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public ViewModel(Model model)
+        {
+            this.model = model;
         }
 
         #endregion

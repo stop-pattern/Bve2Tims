@@ -58,6 +58,11 @@ namespace Bve2Tims
         /// </summary>
         private bool status = true;
 
+        /// <summary>
+        /// メイン処理を受け持つクラス
+        /// </summary>
+        private Model model;
+
         #endregion
 
         #region Properties
@@ -83,11 +88,12 @@ namespace Bve2Tims
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
             Debug.AutoFlush = true;
 
-            Extensions.AllExtensionsLoaded += AllExtensionsLoaded;
-
-            settingWindow = new SettingWindow();
-            settingWindow.Closing += SettingWindowClosing;
+            model = new Model();
+            settingWindow = new SettingWindow(new ViewModel(model));
             settingWindow.Hide();
+
+            Extensions.AllExtensionsLoaded += AllExtensionsLoaded;
+            settingWindow.Closing += SettingWindowClosing;
         }
 
         #endregion
