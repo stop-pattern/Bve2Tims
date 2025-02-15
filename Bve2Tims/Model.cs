@@ -215,13 +215,15 @@ namespace Bve2Tims
         {
             if (canSend)
             {
-                var message = GetVehicleState();
+                string message = GetVehicleState();
+                byte[] sendBytes = Encoding.UTF8.GetBytes(message);
                 Debug.WriteLine($"Message: {message}");
+
                 foreach (var dest in destinations)
                 {
                     if (dest.Status)
                     {
-                        dest.Send(message);
+                        dest.Send(sendBytes);
                         Debug.WriteLine($"Send: {dest.DestinationAddr}:{dest.DestinationPort}");
                     }
                 }

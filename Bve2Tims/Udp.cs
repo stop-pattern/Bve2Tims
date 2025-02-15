@@ -154,6 +154,14 @@ namespace Bve2Tims
             remoteEP.Address = IPAddress.Parse(address);
         }
 
+        /// <summary>
+        /// データ送信
+        /// </summary>
+        /// <param name="sendBytes">送信内容</param>
+        public void Send(byte[] sendBytes)
+        {
+            client.BeginSend(sendBytes, sendBytes.Length, remoteEP, null, null);
+        }
 
         /// <summary>
         /// データ送信
