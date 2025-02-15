@@ -142,9 +142,20 @@ namespace Bve2Tims
 
         #region Constructors
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         internal Model()
         {
             destinations = new ObservableCollection<Udp>();
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        internal Model(List<Udp> udps)
+        {
+            destinations = new ObservableCollection<Udp>(udps);
         }
 
         #endregion
