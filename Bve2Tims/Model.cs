@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using BveEx.Extensions.Native;
 
 namespace Bve2Tims
 {
@@ -18,8 +19,16 @@ namespace Bve2Tims
         private const int unitNumber = 3;
         private const int doorNumber = 10;
 
-        private static int[] unitIndexes = new int[unitNumber];
-        private static int[] doorIndexes = new int[doorNumber];
+        /// <summary>
+        /// ユニットのpanelインデックス
+        /// </summary>
+        private static int[] unitIndexes = new int[unitNumber] { -1, -1, -1 };
+        //private readonly int[] unitIndexes = new int[unitNumber] { 213, 214, 215 };
+
+        /// <summary>
+        /// ドアのpanelインデックス
+        /// </summary>
+        private static int[] doorIndexes = new int[doorNumber] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 
         #endregion
 
@@ -34,6 +43,16 @@ namespace Bve2Tims
         private Udp selectedDestination;
 
         private List<Udp> destinations = new List<Udp>();
+
+        /// <summary>
+        /// Native
+        /// </summary>
+        private INative native;
+
+        /// <summary>
+        /// UDP
+        /// </summary>
+        private Udp udpControl;
 
         #endregion
 

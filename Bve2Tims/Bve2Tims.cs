@@ -58,32 +58,6 @@ namespace Bve2Tims
         /// </summary>
         private bool status = true;
 
-        /// <summary>
-        /// Native
-        /// </summary>
-        private INative native;
-
-        /// <summary>
-        /// UDP
-        /// </summary>
-        private UdpControl udpControl;
-
-        /// <summary>
-        /// 送信可能かどうか
-        /// </summary>
-        private bool canSend = false;
-
-        /// <summary>
-        /// ユニットのpanelインデックス
-        /// </summary>
-        private readonly int[] unitIndexes = new int[] { -1, -1, -1 };
-        //private readonly int[] unitIndexes = new int[] { 213, 214, 215 };
-
-        /// <summary>
-        /// ドアのpanelインデックス
-        /// </summary>
-        private readonly int[] doorIndexes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
-
         #endregion
 
         #region Properties
