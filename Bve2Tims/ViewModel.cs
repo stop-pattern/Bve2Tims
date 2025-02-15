@@ -19,7 +19,6 @@ namespace Bve2Tims
 
         private Model model;
 
-
         #endregion
 
         #region Static Properties
