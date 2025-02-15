@@ -43,6 +43,66 @@ namespace Bve2Tims
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// 通信状態
+        /// </summary>
+        internal bool Status
+        {
+            get
+            {
+                return status;
+            }
+        }
+
+        /// <summary>
+        /// 自動起動
+        /// </summary>
+        public bool AutoStart
+        {
+            get
+            {
+                return autoStart;
+            }
+            set
+            {
+                autoStart = value;
+            }
+        }
+
+        /// <summary>
+        /// 送信先アドレス
+        /// </summary>
+        public string DestinationAddr
+        {
+            get
+            {
+                return destination_addr;
+            }
+            set
+            {
+                destination_addr = value;
+            }
+        }
+
+        /// <summary>
+        /// 送信先ポート
+        /// </summary>
+        public int DestinationPort
+        {
+            get
+            {
+                return destination_port;
+            }
+            set
+            {
+                destination_port = value;
+            }
+        }
+
+        #endregion
+
         #region Methods
 
         /// <summary>

@@ -88,32 +88,6 @@ namespace Bve2Tims
         }
 
         /// <summary>
-        /// 自動起動
-        /// </summary>
-        internal bool AutoStart
-        {
-            get
-            {
-                return autoStart;
-            }
-            set
-            {
-                autoStart = value;
-            }
-        }
-
-        /// <summary>
-        /// 通信状態
-        /// </summary>
-        internal bool Status
-        {
-            get
-            {
-                return status;
-            }
-        }
-
-        /// <summary>
         /// 選択中の宛先インデックス
         /// </summary>
         internal int SelectedDestinationIndex
