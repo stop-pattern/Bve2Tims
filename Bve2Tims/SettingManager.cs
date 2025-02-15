@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,5 +84,71 @@ namespace Bve2Tims
 
     class SettingManager
     {
+        #region Static Methods
+
+        /// <summary>
+        /// 保存先のファイルパスを動的に取得
+        /// このdllのファイルパス - ".dll" + ".Settings.xml"
+        /// </summary>
+        /// <returns>保存先のファイルパス</returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        private static string GetSettingsFilePath()
+        {
+            string assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string directory = Path.GetDirectoryName(assemblyLocation) ?? throw new InvalidOperationException("アセンブリのディレクトリを取得できません。");
+            string fileName = Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            return Path.Combine(directory, $"{fileName}.Settings.xml");
+        }
+
+        /// <summary>
+        /// <see cref="Model"/> のプロパティをXMLファイルに保存
+        /// </summary>
+        /// <param name="model">保存する <see cref="Model"/> インスタンス</param>
+        public static void Save(Model model)
+        {
+            try
+            {
+                string filePath = GetSettingsFilePath();
+
+                using (var writer = new StreamWriter(filePath))
+                {
+                    var serializer = new XmlSerializer(typeof(Settings));
+                    var temp = Settings.FromModel(model);
+                    serializer.Serialize(writer, temp);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"Error saving settings: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// XMLファイルから <see cref="Model"/> のプロパティを読み込み
+        /// </summary>
+        /// <returns>読み込まれた <see cref="Model"/> インスタンス</returns>
+        public static Model Load()
+        {
+            try
+            {
+                string filePath = GetSettingsFilePath();
+
+                if (!File.Exists(filePath)) return new Model();
+
+                using (var reader = new StreamReader(filePath))
+                {
+                    var serializer = new XmlSerializer(typeof(Settings));
+                    var serializableObject = (Settings)serializer.Deserialize(reader);
+                    return Settings.ToModel(serializableObject);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"Error loading settings: {ex.Message}");
+                return new Model();
+            }
+        }
+
+        #endregion
     }
 }
