@@ -24,5 +24,11 @@ namespace Bve2Tims
             InitializeComponent();
             DataContext = new ViewModel();
         }
+
+        public SettingWindow(ViewModel viewModel)
+        {
+            InitializeComponent();
+            DataContext = viewModel;
+        }
     }
 }

@@ -11,13 +11,14 @@ using System.Runtime.CompilerServices;
 
 namespace Bve2Tims
 {
-    using Udp = Tuple<UdpClient, IPEndPoint>;
-
-    internal class ViewModel : INotifyPropertyChanged
+    /// <summary>
+    /// View-Model間の橋渡しを行うクラス
+    /// </summary>
+    public class ViewModel : INotifyPropertyChanged
     {
         #region Fields
 
-        private Model model;
+        private readonly Model model;
 
         #endregion
 
@@ -53,25 +54,25 @@ namespace Bve2Tims
             }
         }
 
-        public string Unit3
-        {
-            get { return Model.UnitIndexes.ElementAtOrDefault(3).ToString(); }
-            set
-            {
-                Model.UnitIndexes[3] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Unit3
+        //{
+        //    get { return Model.UnitIndexes.ElementAtOrDefault(3).ToString(); }
+        //    set
+        //    {
+        //        Model.UnitIndexes[3] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
-        public string Unit4
-        {
-            get { return Model.UnitIndexes.ElementAtOrDefault(4).ToString(); }
-            set
-            {
-                Model.UnitIndexes[4] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Unit4
+        //{
+        //    get { return Model.UnitIndexes.ElementAtOrDefault(4).ToString(); }
+        //    set
+        //    {
+        //        Model.UnitIndexes[4] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
         public string Door0
         {
@@ -173,65 +174,65 @@ namespace Bve2Tims
             }
         }
 
-        public string Door10
-        {
-            get { return Model.DoorIndexes.ElementAtOrDefault(10).ToString(); }
-            set
-            {
-                Model.DoorIndexes[10] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Door10
+        //{
+        //    get { return Model.DoorIndexes.ElementAtOrDefault(10).ToString(); }
+        //    set
+        //    {
+        //        Model.DoorIndexes[10] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
-        public string Door11
-        {
-            get { return Model.DoorIndexes.ElementAtOrDefault(11).ToString(); }
-            set
-            {
-                Model.DoorIndexes[11] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Door11
+        //{
+        //    get { return Model.DoorIndexes.ElementAtOrDefault(11).ToString(); }
+        //    set
+        //    {
+        //        Model.DoorIndexes[11] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
-        public string Door12
-        {
-            get { return Model.DoorIndexes.ElementAtOrDefault(12).ToString(); }
-            set
-            {
-                Model.DoorIndexes[12] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Door12
+        //{
+        //    get { return Model.DoorIndexes.ElementAtOrDefault(12).ToString(); }
+        //    set
+        //    {
+        //        Model.DoorIndexes[12] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
-        public string Door13
-        {
-            get { return Model.DoorIndexes.ElementAtOrDefault(13).ToString(); }
-            set
-            {
-                Model.DoorIndexes[13] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Door13
+        //{
+        //    get { return Model.DoorIndexes.ElementAtOrDefault(13).ToString(); }
+        //    set
+        //    {
+        //        Model.DoorIndexes[13] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
-        public string Door14
-        {
-            get { return Model.DoorIndexes.ElementAtOrDefault(14).ToString(); }
-            set
-            {
-                Model.DoorIndexes[14] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Door14
+        //{
+        //    get { return Model.DoorIndexes.ElementAtOrDefault(14).ToString(); }
+        //    set
+        //    {
+        //        Model.DoorIndexes[14] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
-        public string Door15
-        {
-            get { return Model.DoorIndexes.ElementAtOrDefault(15).ToString(); }
-            set
-            {
-                Model.DoorIndexes[15] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Door15
+        //{
+        //    get { return Model.DoorIndexes.ElementAtOrDefault(15).ToString(); }
+        //    set
+        //    {
+        //        Model.DoorIndexes[15] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
         #endregion
 
@@ -240,22 +241,19 @@ namespace Bve2Tims
         /// <summary>
         /// ユニットインデックス
         /// </summary>
-        public bool AutoStart
+        internal static int[] UnitIndexes
         {
-            get { return model.AutoStart; }
-            set
-            {
-                model.AutoStart = value;
-                NotifyPropertyChanged();
-            }
+            get { return Model.UnitIndexes; }
+            set { Model.UnitIndexes = value; }
         }
 
         /// <summary>
-        /// 通信状態
+        /// ドアインデックス
         /// </summary>
-        public bool Status
+        internal static int[] DoorIndexes
         {
-            get { return model.Status; }
+            get { return Model.DoorIndexes; }
+            set { Model.DoorIndexes = value; }
         }
 
         /// <summary>
@@ -289,10 +287,10 @@ namespace Bve2Tims
         /// </summary>
         public ObservableCollection<Udp> Destinations
         {
-            get { return new ObservableCollection<Udp>(model.Destinations); }
+            get { return model.Destinations; }
             set
             {
-                model.Destinations = new List<Udp>(value);
+                model.Destinations = value;
                 NotifyPropertyChanged();
             }
         }
@@ -307,7 +305,14 @@ namespace Bve2Tims
         public ViewModel()
         {
             model = new Model();
-            model.Destinations.Add(new Udp(new UdpClient(), new IPEndPoint(IPAddress.Loopback, Model.destinationPort)));
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public ViewModel(Model model)
+        {
+            this.model = model;
         }
 
         #endregion
@@ -325,7 +330,7 @@ namespace Bve2Tims
         /// <param name="propertyName">プロパティ名</param>
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

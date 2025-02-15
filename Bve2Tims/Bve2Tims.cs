@@ -12,7 +12,6 @@ using BveEx.Extensions.Native;
 using BveEx.Extensions.ContextMenuHacker;
 using BveEx.PluginHost.Plugins;
 using BveEx.PluginHost.Plugins.Extensions;
-using BveTypes.ClassWrappers;
 
 namespace Bve2Tims
 {
@@ -51,7 +50,7 @@ namespace Bve2Tims
         /// <summary>
         /// 設定ウィンドウ
         /// </summary>
-        private SettingWindow settingWindow;
+        private readonly SettingWindow settingWindow;
 
         /// <summary>
         /// プラグインの有効・無効状態
@@ -59,30 +58,9 @@ namespace Bve2Tims
         private bool status = true;
 
         /// <summary>
-        /// Native
+        /// メイン処理を受け持つクラス
         /// </summary>
-        private INative native;
-
-        /// <summary>
-        /// UDP
-        /// </summary>
-        private UdpControl udpControl;
-
-        /// <summary>
-        /// 送信可能かどうか
-        /// </summary>
-        private bool canSend = false;
-
-        /// <summary>
-        /// ユニットのpanelインデックス
-        /// </summary>
-        private readonly int[] unitIndexes = new int[] { -1, -1, -1 };
-        //private readonly int[] unitIndexes = new int[] { 213, 214, 215 };
-
-        /// <summary>
-        /// ドアのpanelインデックス
-        /// </summary>
-        private readonly int[] doorIndexes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+        private readonly Model model;
 
         #endregion
 
@@ -109,11 +87,12 @@ namespace Bve2Tims
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
             Debug.AutoFlush = true;
 
-            Extensions.AllExtensionsLoaded += AllExtensionsLoaded;
-
-            settingWindow = new SettingWindow();
-            settingWindow.Closing += SettingWindowClosing;
+            model = new Model();
+            settingWindow = new SettingWindow(new ViewModel(model));
             settingWindow.Hide();
+
+            Extensions.AllExtensionsLoaded += AllExtensionsLoaded;
+            settingWindow.Closing += SettingWindowClosing;
         }
 
         #endregion
@@ -128,13 +107,9 @@ namespace Bve2Tims
         {
             settingWindow.Close();
 
+            settingWindow.Closing -= SettingWindowClosing;
+            Extensions.AllExtensionsLoaded -= AllExtensionsLoaded;
             setting.CheckedChanged -= MenuItemCheckedChanged;
-            native.Opened -= NativeOpened;
-            native.Closed -= NativeClosed;
-
-            udpControl.Dispose();
-            udpControl = null;
-            native = null;
         }
 
         /// <summary>
@@ -143,85 +118,9 @@ namespace Bve2Tims
         /// <param name="elapsed">前回フレームからの経過時間</param>
         public override void Tick(TimeSpan elapsed)
         {
-            if (status && canSend)
+            if (status)
             {
-                string message = $"{native.VehicleState.Location},{native.VehicleState.Speed},{(int)native.VehicleState.Time.TotalMilliseconds},";
-                //string message = "";
-                //message += native.VehicleState.Location.ToString() + ",";
-                //message += native.VehicleState.Speed.ToString() + ",";
-                //message += native.VehicleState.Time.TotalMilliseconds.ToString();
-
-                // Unit表示
-                foreach (var index in unitIndexes)
-                {
-                    if (index > 0)
-                    {
-                        message += $"{GetPanelData(index)},";
-                    }
-                    else
-                    {
-                        var current = BveHacker.Scenario.Vehicle.Instruments.Electricity.MotorState.Current;
-                        if (current > 0)
-                        {
-                            message += "1,";
-                        }
-                        else if (current < 0)
-                        {
-                            message += "2,";
-                        }
-                        else
-                        {
-                            message += "0,";
-                        }
-                    }
-                }
-
-                // ドア表示
-                for (int i = 0; i < doorIndexes.Length; i++)
-                {
-                    if (doorIndexes.ElementAt(i) > 0)
-                    {
-                        message += $"{GetPanelData(doorIndexes.ElementAt(i))},";
-                        continue;
-                    }
-                    else
-                    {
-                        DoorSet ds = BveHacker.Scenario.Vehicle.Doors;
-                        if (ds.AreAllClosed)
-                        {
-                            message += "0,";
-                            continue;
-                        }
-                        else
-                        {
-                            int door = 0;
-                            try
-                            {
-                                if (ds.GetSide(DoorSide.Right).CarDoors.ElementAt(i).IsOpen)
-                                {
-                                    door = 1;
-                                }
-                                else if (ds.GetSide(DoorSide.Left).CarDoors.ElementAt(i).IsOpen)
-                                {
-                                    door = 2;
-                                }
-                            }
-                            catch (ArgumentOutOfRangeException)
-                            {
-                                Debug.WriteLine("ArgumentOutOfRangeException: car number is out of range");
-                                door = 0;
-                            }
-                            catch (Exception)
-                            {
-                                door = 0;
-                            }
-                            message += $"{door},";
-                        }
-                    }
-                }
-
-                Debug.WriteLine($"Send: {message}");
-                udpControl.Send(message);
+                model.Tick();
             }
         }
 
@@ -235,30 +134,11 @@ namespace Bve2Tims
         /// <param name="sender"></param>
         private void AllExtensionsLoaded(object sender, EventArgs e)
         {
-            native = Extensions.GetExtension<INative>();
             cmx = Extensions.GetExtension<IContextMenuHacker>();
 
-            native.Opened += NativeOpened;
-            native.Closed += NativeClosed;
+            model.Initialize(BveHacker,  Extensions.GetExtension<INative>());
 
             setting = cmx.AddCheckableMenuItem("TIMS連携設定", MenuItemCheckedChanged, ContextMenuItemType.CoreAndExtensions);
-        }
-
-        /// <summary>
-        /// <see cref="Native"/> が利用可能になったときに呼ばれる
-        /// </summary>
-        private void NativeOpened(object sender, EventArgs e)
-        {
-            udpControl = new UdpControl();
-            canSend = true;
-        }
-
-        /// <summary>
-        /// <see cref="Native"/> が利用不能になる直前に呼ばれる
-        /// </summary>
-        private void NativeClosed(object sender, EventArgs e)
-        {
-            canSend = false;
         }
 
         /// <summary>
@@ -297,125 +177,5 @@ namespace Bve2Tims
         }
 
         #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// パネルデータ取得
-        /// </summary>
-        /// <param name="index">パネルのindex</param>
-        /// <returns></returns>
-        private int GetPanelData(int index)
-        {
-            if (index < 0)
-            {
-                return 0;
-            }
-
-            try
-            {
-                return native.AtsPanelArray.ElementAt(index);
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                Debug.WriteLine(ex.Message);
-                return 0;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                return 0;
-            }
-        }
-
-        #endregion
     }
-
-    /// <summary>
-    /// UDP通信クラス
-    /// </summary>
-    internal class UdpControl
-    {
-        #region Fields
-
-        /// <summary>
-        /// 送信ポート
-        /// </summary>
-        private static int source_port = 2331;
-
-        /// <summary>
-        /// 受信ポート
-        /// </summary>
-        private static int destination_port = 2330;
-
-        /// <summary>
-        /// 送信先アドレス
-        /// </summary>
-        private string destination_addr = "127.0.0.1";
-
-        /// <summary>
-        /// UDPクライアント
-        /// </summary>
-        private UdpClient client = new UdpClient(source_port, AddressFamily.InterNetwork);
-
-        /// <summary>
-        /// データ送信
-        /// </summary>
-        private IPEndPoint remoteEP = new IPEndPoint(IPAddress.Loopback, destination_port);
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public UdpControl()
-        {
-            remoteEP = new IPEndPoint(IPAddress.Loopback, destination_port);
-        }
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="destination">送信先アドレス</param>
-        public UdpControl(string destination) : this()
-        {
-            //Connect(destination);
-        }
-
-        /// <summary>
-        /// 終了処理
-        /// </summary>
-        public void Dispose()
-        {
-            client.Close();
-        }
-
-        /// <summary>
-        /// 接続先設定
-        /// </summary>
-        /// <param name="address">IPアドレス</param>
-        public void Connect(string address)
-        {
-            destination_addr = address;
-            remoteEP = new IPEndPoint(IPAddress.Parse(destination_addr), destination_port);
-        }
-
-        /// <summary>
-        /// データ送信
-        /// </summary>
-        /// <param name="message">送信内容</param>
-        public void Send(string message)
-        {
-            byte[] sendBytes = Encoding.UTF8.GetBytes(message);
-            //client.Connect(remoteEP);
-            //client.Send(sendBytes, sendBytes.Length);
-            //client.Close();
-            client.BeginSend(sendBytes, sendBytes.Length, remoteEP, null, null);
-        }
-
-        #endregion
-    }
-
 }
