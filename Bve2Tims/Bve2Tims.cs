@@ -119,6 +119,10 @@ namespace Bve2Tims
         /// <param name="elapsed">前回フレームからの経過時間</param>
         public override void Tick(TimeSpan elapsed)
         {
+            if (status)
+            {
+                model.Tick();
+            }
         }
 
         #endregion

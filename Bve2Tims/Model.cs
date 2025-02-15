@@ -178,6 +178,23 @@ namespace Bve2Tims
             status = false;
         }
 
+        /// <summary>
+        /// 送信処理
+        /// </summary>
+        internal void Tick()
+        {
+            var message = GetVehicleState();
+            Debug.WriteLine($"Message: {message}");
+            foreach (var dest in destinations)
+            {
+                if (dest.Status)
+                {
+                    Debug.WriteLine($"Send: {dest.DestinationAddr}:{dest.DestinationPort}");
+                    dest.Send(message);
+                }
+            }
+        }
+
         internal void Send(string data)
         {
             byte[] buffer = Encoding.UTF8.GetBytes(data);
