@@ -139,6 +139,9 @@ namespace Bve2Tims
             model.Initialize(BveHacker,  Extensions.GetExtension<INative>());
 
             setting = cmx.AddCheckableMenuItem("TIMS連携設定", MenuItemCheckedChanged, ContextMenuItemType.CoreAndExtensions);
+#if DEBUG
+            setting.Checked = true;
+#endif
         }
 
         /// <summary>
