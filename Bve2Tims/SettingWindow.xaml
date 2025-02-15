@@ -148,10 +148,10 @@
                           SelectedItem="{Binding SelectedDestination, Mode=TwoWay}"
                           ItemsSource="{Binding Destinations}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status}"/>
+                        <DataGridCheckBoxColumn Header="Status" Width="*" Binding="{Binding Status}"/>
                         <DataGridTextColumn Header="IP" Width="3*" Binding="{Binding DestinationAddr}"/>
                         <DataGridTextColumn Header="Port" Width="2*" Binding="{Binding DestinationPort}"/>
-                        <DataGridTextColumn Header="Auto start" Width="1.5*" Binding="{Binding AutoStart}"/>
+                        <DataGridCheckBoxColumn Header="Auto start" Width="1.5*" Binding="{Binding AutoStart}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
