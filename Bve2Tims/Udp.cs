@@ -64,7 +64,7 @@ namespace Bve2Tims
         /// <summary>
         /// 通信状態
         /// </summary>
-        internal bool Status
+        public bool Status
         {
             get
             {
