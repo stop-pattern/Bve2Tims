@@ -202,16 +202,6 @@ namespace Bve2Tims
             native.Closed += NativeClosed;
         }
 
-        internal void Start()
-        {
-            status = true;
-        }
-
-        internal void Stop()
-        {
-            status = false;
-        }
-
         /// <summary>
         /// 送信処理
         /// </summary>
