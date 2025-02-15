@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Bve2Tims
 {
+    using Udp = Tuple<UdpClient, IPEndPoint>;
+
     internal class Model
     {
         #region const/static Fields
@@ -29,9 +31,11 @@ namespace Bve2Tims
 
         private bool status = false;
         
-        private UdpClient udpClient;
+        private int selectedDestinationIndex;
 
-        private IPEndPoint remoteEP;
+        private Udp selectedDestination;
+
+        private List<Udp> destinations = new List<Udp>();
 
         #endregion
 
@@ -86,32 +90,47 @@ namespace Bve2Tims
         }
 
         /// <summary>
-        /// 宛先アドレス
+        /// 選択中の宛先インデックス
         /// </summary>
-        internal string Address
+        internal int SelectedDestinationIndex
         {
             get
             {
-                return remoteEP.Address.ToString();
+                return selectedDestinationIndex;
             }
             set
             {
-                remoteEP.Address = IPAddress.Parse(value);
+                selectedDestinationIndex = value;
             }
         }
 
         /// <summary>
-        /// 宛先ポート番号
+        /// 選択中の宛先
         /// </summary>
-        internal int Port
+        internal Udp SelectedDestination
         {
             get
             {
-                return remoteEP.Port;
+                return selectedDestination;
             }
             set
             {
-                remoteEP.Port = value;
+                selectedDestination = value;
+            }
+        }
+
+        /// <summary>
+        /// 宛先リスト
+        /// </summary>
+        internal List<Udp> Destinations
+        {
+            get
+            {
+                return destinations;
+            }
+            set
+            {
+                destinations = value;
             }
         }
 
@@ -121,24 +140,7 @@ namespace Bve2Tims
 
         internal Model()
         {
-            udpClient = new UdpClient();
-            remoteEP = new IPEndPoint(IPAddress.Loopback, destinationPort);
-        }
-
-        internal Model(int originPort, int destinationPort)
-        {
-            this.originPort = originPort;
-            this.destinationPort = destinationPort;
-            udpClient = new UdpClient(originPort);
-            remoteEP = new IPEndPoint(IPAddress.Loopback, destinationPort);
-        }
-
-        internal Model(int originPort, int destinationPort, string address)
-        {
-            this.originPort = originPort;
-            this.destinationPort = destinationPort;
-            udpClient = new UdpClient(originPort);
-            remoteEP = new IPEndPoint(IPAddress.Parse(address), destinationPort);
+            destinations = new List<Udp>();
         }
 
         #endregion
@@ -158,12 +160,10 @@ namespace Bve2Tims
         internal void Send(string data)
         {
             byte[] buffer = Encoding.UTF8.GetBytes(data);
-            udpClient.SendAsync(buffer, buffer.Length, remoteEP);
+            foreach (Udp udp in destinations)
+            {
+                udp.Item1.Send(buffer, buffer.Length, udp.Item2);
         }
-
-        internal byte[] Receive()
-        {
-            return udpClient.Receive(ref remoteEP);
         }
 
         #endregion
