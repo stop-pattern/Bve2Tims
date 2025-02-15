@@ -161,6 +161,9 @@ namespace Bve2Tims
         internal Model()
         {
             destinations = new List<Udp>();
+
+            native.Opened += NativeOpened;
+            native.Closed += NativeClosed;
         }
 
         #endregion
@@ -296,6 +299,28 @@ namespace Bve2Tims
                 Debug.WriteLine(ex.Message);
                 return 0;
             }
+        }
+
+        #endregion
+
+        #region Eevent Handlers
+
+        /// <summary>
+        /// <see cref="Native"/> が利用可能になったときに呼ばれる
+        /// </summary>
+        private void NativeOpened(object sender, EventArgs e)
+        {
+
+            udpControl = new Udp();
+            canSend = true;
+        }
+
+        /// <summary>
+        /// <see cref="Native"/> が利用不能になる直前に呼ばれる
+        /// </summary>
+        private void NativeClosed(object sender, EventArgs e)
+        {
+            canSend = false;
         }
 
         #endregion

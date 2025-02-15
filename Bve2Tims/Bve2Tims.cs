@@ -138,27 +138,7 @@ namespace Bve2Tims
             native = Extensions.GetExtension<INative>();
             cmx = Extensions.GetExtension<IContextMenuHacker>();
 
-            native.Opened += NativeOpened;
-            native.Closed += NativeClosed;
-
             setting = cmx.AddCheckableMenuItem("TIMS連携設定", MenuItemCheckedChanged, ContextMenuItemType.CoreAndExtensions);
-        }
-
-        /// <summary>
-        /// <see cref="Native"/> が利用可能になったときに呼ばれる
-        /// </summary>
-        private void NativeOpened(object sender, EventArgs e)
-        {
-            udpControl = new UdpControl();
-            canSend = true;
-        }
-
-        /// <summary>
-        /// <see cref="Native"/> が利用不能になる直前に呼ばれる
-        /// </summary>
-        private void NativeClosed(object sender, EventArgs e)
-        {
-            canSend = false;
         }
 
         /// <summary>
