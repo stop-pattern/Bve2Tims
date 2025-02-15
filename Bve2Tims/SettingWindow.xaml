@@ -149,8 +149,8 @@
                           ItemsSource="{Binding Destinations}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status}"/>
-                        <DataGridTextColumn Header="IP" Width="3*" Binding="{Binding IP}"/>
-                        <DataGridTextColumn Header="Port" Width="2*" Binding="{Binding Port}"/>
+                        <DataGridTextColumn Header="IP" Width="3*" Binding="{Binding DestinationAddr}"/>
+                        <DataGridTextColumn Header="Port" Width="2*" Binding="{Binding DestinationPort}"/>
                         <DataGridTextColumn Header="Auto start" Width="1.5*" Binding="{Binding AutoStart}"/>
                     </DataGrid.Columns>
                 </DataGrid>
