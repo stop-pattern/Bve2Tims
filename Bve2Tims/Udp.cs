@@ -55,7 +55,7 @@ namespace Bve2Tims
         /// <summary>
         /// データ送信
         /// </summary>
-        private IPEndPoint remoteEP = new IPEndPoint(IPAddress.Loopback, destination_port);
+        private IPEndPoint remoteEP;
 
         #endregion
 
