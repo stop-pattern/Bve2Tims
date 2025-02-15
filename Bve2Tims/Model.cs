@@ -187,9 +187,13 @@ namespace Bve2Tims
             }
         }
 
-        internal void SendVehicleState(bool canSend)
+        /// <summary>
+        /// 送信文字列取得
+        /// </summary>
+        /// <returns>送信文字列</returns>
+        internal string GetVehicleState()
         {
-            if (status && canSend)
+            if (status)
             {
                 string message = $"{native.VehicleState.Location},{native.VehicleState.Speed},{(int)native.VehicleState.Time.TotalMilliseconds},";
                 //string message = "";
@@ -267,7 +271,7 @@ namespace Bve2Tims
                 }
 
                 Debug.WriteLine($"Send: {message}");
-                udpControl.Send(message);
+                return message;
             }
         }
 
