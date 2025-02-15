@@ -14,8 +14,8 @@ namespace Bve2Tims
     {
         #region const/static Fields
 
-        public int originPort = 0;
-        public int destinationPort = 0;
+        public static int originPort = 0;
+        public static int destinationPort = 0;
 
         private const int unitNumber = 3;
         private const int doorNumber = 10;
@@ -30,7 +30,7 @@ namespace Bve2Tims
         private bool autoStart = true;
 
         private bool status = false;
-        
+
         private int selectedDestinationIndex;
 
         private Udp selectedDestination;
@@ -163,7 +163,7 @@ namespace Bve2Tims
             foreach (Udp udp in destinations)
             {
                 udp.Item1.Send(buffer, buffer.Length, udp.Item2);
-        }
+            }
         }
 
         #endregion
