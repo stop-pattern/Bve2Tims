@@ -239,27 +239,6 @@ namespace Bve2Tims
         #region Properties
 
         /// <summary>
-        /// ユニットインデックス
-        /// </summary>
-        public bool AutoStart
-        {
-            get { return model.AutoStart; }
-            set
-            {
-                model.AutoStart = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// 通信状態
-        /// </summary>
-        public bool Status
-        {
-            get { return model.Status; }
-        }
-
-        /// <summary>
         /// 選択中の宛先インデックス
         /// </summary>
         public int SelectedDestinationIndex
