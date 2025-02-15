@@ -54,25 +54,25 @@ namespace Bve2Tims
             }
         }
 
-        public string Unit3
-        {
-            get { return Model.UnitIndexes.ElementAtOrDefault(3).ToString(); }
-            set
-            {
-                Model.UnitIndexes[3] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Unit3
+        //{
+        //    get { return Model.UnitIndexes.ElementAtOrDefault(3).ToString(); }
+        //    set
+        //    {
+        //        Model.UnitIndexes[3] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
-        public string Unit4
-        {
-            get { return Model.UnitIndexes.ElementAtOrDefault(4).ToString(); }
-            set
-            {
-                Model.UnitIndexes[4] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Unit4
+        //{
+        //    get { return Model.UnitIndexes.ElementAtOrDefault(4).ToString(); }
+        //    set
+        //    {
+        //        Model.UnitIndexes[4] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
         public string Door0
         {
@@ -174,65 +174,65 @@ namespace Bve2Tims
             }
         }
 
-        public string Door10
-        {
-            get { return Model.DoorIndexes.ElementAtOrDefault(10).ToString(); }
-            set
-            {
-                Model.DoorIndexes[10] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Door10
+        //{
+        //    get { return Model.DoorIndexes.ElementAtOrDefault(10).ToString(); }
+        //    set
+        //    {
+        //        Model.DoorIndexes[10] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
-        public string Door11
-        {
-            get { return Model.DoorIndexes.ElementAtOrDefault(11).ToString(); }
-            set
-            {
-                Model.DoorIndexes[11] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Door11
+        //{
+        //    get { return Model.DoorIndexes.ElementAtOrDefault(11).ToString(); }
+        //    set
+        //    {
+        //        Model.DoorIndexes[11] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
-        public string Door12
-        {
-            get { return Model.DoorIndexes.ElementAtOrDefault(12).ToString(); }
-            set
-            {
-                Model.DoorIndexes[12] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Door12
+        //{
+        //    get { return Model.DoorIndexes.ElementAtOrDefault(12).ToString(); }
+        //    set
+        //    {
+        //        Model.DoorIndexes[12] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
-        public string Door13
-        {
-            get { return Model.DoorIndexes.ElementAtOrDefault(13).ToString(); }
-            set
-            {
-                Model.DoorIndexes[13] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Door13
+        //{
+        //    get { return Model.DoorIndexes.ElementAtOrDefault(13).ToString(); }
+        //    set
+        //    {
+        //        Model.DoorIndexes[13] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
-        public string Door14
-        {
-            get { return Model.DoorIndexes.ElementAtOrDefault(14).ToString(); }
-            set
-            {
-                Model.DoorIndexes[14] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Door14
+        //{
+        //    get { return Model.DoorIndexes.ElementAtOrDefault(14).ToString(); }
+        //    set
+        //    {
+        //        Model.DoorIndexes[14] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
-        public string Door15
-        {
-            get { return Model.DoorIndexes.ElementAtOrDefault(15).ToString(); }
-            set
-            {
-                Model.DoorIndexes[15] = int.Parse(value);
-                NotifyPropertyChanged();
-            }
-        }
+        //public string Door15
+        //{
+        //    get { return Model.DoorIndexes.ElementAtOrDefault(15).ToString(); }
+        //    set
+        //    {
+        //        Model.DoorIndexes[15] = int.Parse(value);
+        //        NotifyPropertyChanged();
+        //    }
+        //}
 
         #endregion
 
