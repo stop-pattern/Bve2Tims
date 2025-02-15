@@ -21,7 +21,12 @@ namespace Bve2Tims
         /// <summary>
         /// 送信ポート
         /// </summary>
-        private static int source_port = 2331;
+        private static readonly int source_port = 2331;
+
+        /// <summary>
+        /// 受信ポート
+        /// </summary>
+        private static readonly int destination_port = 2330;
 
         #endregion
 
