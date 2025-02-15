@@ -21,7 +21,14 @@ namespace Bve2Tims
     {
         #region const/static Fields
 
+        /// <summary>
+        /// ユニット数
+        /// </summary>
         private const int unitNumber = 3;
+
+        /// <summary>
+        /// 両数
+        /// </summary>
         private const int doorNumber = 10;
 
         /// <summary>
