@@ -39,10 +39,19 @@ namespace Bve2Tims
 
         #region Fields
 
+        /// <summary>
+        /// 選択中の宛先インデックス
+        /// </summary>
         private int selectedDestinationIndex;
 
+        /// <summary>
+        /// 選択中の宛先
+        /// </summary>
         private Udp selectedDestination;
 
+        /// <summary>
+        /// 宛先リスト
+        /// </summary>
         private ObservableCollection<Udp> destinations = new ObservableCollection<Udp>();
 
         /// <summary>
