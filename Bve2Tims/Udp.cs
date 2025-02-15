@@ -16,7 +16,7 @@ namespace Bve2Tims
     /// </summary>
     public class Udp : INotifyPropertyChanged
     {
-        #region Fields
+        #region Static Fields
 
         /// <summary>
         /// 送信ポート
@@ -27,6 +27,10 @@ namespace Bve2Tims
         /// 受信ポート
         /// </summary>
         private static int destination_port = 2330;
+
+        #endregion
+
+        #region Fields
 
         /// <summary>
         /// 送信先アドレス
