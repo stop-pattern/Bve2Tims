@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using BveEx.Extensions.Native;
+using BveEx.PluginHost;
+using BveTypes.ClassWrappers;
 
 namespace Bve2Tims
 {
@@ -180,6 +183,118 @@ namespace Bve2Tims
             foreach (Udp udp in destinations)
             {
                 udp.Item1.Send(buffer, buffer.Length, udp.Item2);
+            }
+        }
+
+        internal void SendVehicleState(bool canSend)
+        {
+            if (status && canSend)
+            {
+                string message = $"{native.VehicleState.Location},{native.VehicleState.Speed},{(int)native.VehicleState.Time.TotalMilliseconds},";
+                //string message = "";
+                //message += native.VehicleState.Location.ToString() + ",";
+                //message += native.VehicleState.Speed.ToString() + ",";
+                //message += native.VehicleState.Time.TotalMilliseconds.ToString();
+
+                // Unit表示
+                foreach (var index in unitIndexes)
+                {
+                    if (index > 0)
+                    {
+                        message += $"{GetPanelData(index)},";
+                    }
+                    else
+                    {
+                        var current = BveHacker.Scenario.Vehicle.Instruments.Electricity.MotorState.Current;
+                        if (current > 0)
+                        {
+                            message += "1,";
+                        }
+                        else if (current < 0)
+                        {
+                            message += "2,";
+                        }
+                        else
+                        {
+                            message += "0,";
+                        }
+                    }
+                }
+
+                // ドア表示
+                for (int i = 0; i < doorIndexes.Length; i++)
+                {
+                    if (doorIndexes.ElementAt(i) > 0)
+                    {
+                        message += $"{GetPanelData(doorIndexes.ElementAt(i))},";
+                        continue;
+                    }
+                    else
+                    {
+                        DoorSet ds = BveHacker.Scenario.Vehicle.Doors;
+                        if (ds.AreAllClosed)
+                        {
+                            message += "0,";
+                            continue;
+                        }
+                        else
+                        {
+                            int door = 0;
+                            try
+                            {
+                                if (ds.GetSide(DoorSide.Right).CarDoors.ElementAt(i).IsOpen)
+                                {
+                                    door = 1;
+                                }
+                                else if (ds.GetSide(DoorSide.Left).CarDoors.ElementAt(i).IsOpen)
+                                {
+                                    door = 2;
+                                }
+                            }
+                            catch (ArgumentOutOfRangeException)
+                            {
+                                Debug.WriteLine("ArgumentOutOfRangeException: car number is out of range");
+                                door = 0;
+                            }
+                            catch (Exception)
+                            {
+                                door = 0;
+                            }
+                            message += $"{door},";
+                        }
+                    }
+                }
+
+                Debug.WriteLine($"Send: {message}");
+                udpControl.Send(message);
+            }
+        }
+
+        /// <summary>
+        /// パネルデータ取得
+        /// </summary>
+        /// <param name="index">パネルのindex</param>
+        /// <returns></returns>
+        private int GetPanelData(int index)
+        {
+            if (index < 0)
+            {
+                return 0;
+            }
+
+            try
+            {
+                return native.AtsPanelArray.ElementAt(index);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return 0;
             }
         }
 
