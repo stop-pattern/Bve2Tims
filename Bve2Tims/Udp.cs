@@ -12,7 +12,7 @@ namespace Bve2Tims
     /// UDP通信クラス
     /// 送信先とそのポートを保持する
     /// </summary>
-    internal class Udp
+    public class Udp
     {
         #region Fields
 
