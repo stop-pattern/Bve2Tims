@@ -199,10 +199,18 @@ namespace Bve2Tims
 
         #endregion
 
+        #region Constructor
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public ViewModel()
         {
             model = new Model();
+            model.Destinations.Add(new Udp(new UdpClient(), new IPEndPoint(IPAddress.Loopback, Model.destinationPort)));
         }
+
+        #endregion
 
         #region INotifyPropertyChanged
 
