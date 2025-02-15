@@ -145,7 +145,7 @@
                           AutoGenerateColumns="False"
                           SelectionMode="Single"
                           SelectedIndex="{Binding SelectedDestinationIndex}"
-                          SelectedItem="{Binding SelectedDestination}"
+                          SelectedItem="{Binding SelectedDestination, Mode=TwoWay}"
                           ItemsSource="{Binding Destinations}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status}"/>
