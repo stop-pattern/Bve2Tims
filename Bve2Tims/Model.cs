@@ -203,86 +203,83 @@ namespace Bve2Tims
         /// <returns>送信文字列</returns>
         internal string GetVehicleState()
         {
-            if (status)
-            {
-                string message = $"{native.VehicleState.Location},{native.VehicleState.Speed},{(int)native.VehicleState.Time.TotalMilliseconds},";
-                //string message = "";
-                //message += native.VehicleState.Location.ToString() + ",";
-                //message += native.VehicleState.Speed.ToString() + ",";
-                //message += native.VehicleState.Time.TotalMilliseconds.ToString();
+            string message = $"{native.VehicleState.Location},{native.VehicleState.Speed},{(int)native.VehicleState.Time.TotalMilliseconds},";
+            //string message = "";
+            //message += native.VehicleState.Location.ToString() + ",";
+            //message += native.VehicleState.Speed.ToString() + ",";
+            //message += native.VehicleState.Time.TotalMilliseconds.ToString();
 
-                // Unit表示
-                foreach (var index in unitIndexes)
+            // Unit表示
+            foreach (var index in unitIndexes)
+            {
+                if (index > 0)
                 {
-                    if (index > 0)
+                    message += $"{GetPanelData(index)},";
+                }
+                else
+                {
+                    var current = BveHacker.Scenario.Vehicle.Instruments.Electricity.MotorState.Current;
+                    if (current > 0)
                     {
-                        message += $"{GetPanelData(index)},";
+                        message += "1,";
+                    }
+                    else if (current < 0)
+                    {
+                        message += "2,";
                     }
                     else
                     {
-                        var current = BveHacker.Scenario.Vehicle.Instruments.Electricity.MotorState.Current;
-                        if (current > 0)
-                        {
-                            message += "1,";
-                        }
-                        else if (current < 0)
-                        {
-                            message += "2,";
-                        }
-                        else
-                        {
-                            message += "0,";
-                        }
+                        message += "0,";
                     }
                 }
+            }
 
-                // ドア表示
-                for (int i = 0; i < doorIndexes.Length; i++)
+            // ドア表示
+            for (int i = 0; i < doorIndexes.Length; i++)
+            {
+                if (doorIndexes.ElementAt(i) > 0)
                 {
-                    if (doorIndexes.ElementAt(i) > 0)
+                    message += $"{GetPanelData(doorIndexes.ElementAt(i))},";
+                    continue;
+                }
+                else
+                {
+                    DoorSet ds = BveHacker.Scenario.Vehicle.Doors;
+                    if (ds.AreAllClosed)
                     {
-                        message += $"{GetPanelData(doorIndexes.ElementAt(i))},";
+                        message += "0,";
                         continue;
                     }
                     else
                     {
-                        DoorSet ds = BveHacker.Scenario.Vehicle.Doors;
-                        if (ds.AreAllClosed)
+                        int door = 0;
+                        try
                         {
-                            message += "0,";
-                            continue;
+                            if (ds.GetSide(DoorSide.Right).CarDoors.ElementAt(i).IsOpen)
+                            {
+                                door = 1;
+                            }
+                            else if (ds.GetSide(DoorSide.Left).CarDoors.ElementAt(i).IsOpen)
+                            {
+                                door = 2;
+                            }
                         }
-                        else
+                        catch (ArgumentOutOfRangeException)
                         {
-                            int door = 0;
-                            try
-                            {
-                                if (ds.GetSide(DoorSide.Right).CarDoors.ElementAt(i).IsOpen)
-                                {
-                                    door = 1;
-                                }
-                                else if (ds.GetSide(DoorSide.Left).CarDoors.ElementAt(i).IsOpen)
-                                {
-                                    door = 2;
-                                }
-                            }
-                            catch (ArgumentOutOfRangeException)
-                            {
-                                Debug.WriteLine("ArgumentOutOfRangeException: car number is out of range");
-                                door = 0;
-                            }
-                            catch (Exception)
-                            {
-                                door = 0;
-                            }
-                            message += $"{door},";
+                            Debug.WriteLine("ArgumentOutOfRangeException: car number is out of range");
+                            door = 0;
                         }
+                        catch (Exception)
+                        {
+                            door = 0;
+                        }
+                        message += $"{door},";
                     }
                 }
-
-                Debug.WriteLine($"Send: {message}");
-                return message;
             }
+
+            Debug.WriteLine($"Send: {message}");
+            return message;
         }
 
         /// <summary>
