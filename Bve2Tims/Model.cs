@@ -71,6 +71,11 @@ namespace Bve2Tims
         /// </summary>
         private INative native;
 
+        /// <summary>
+        /// 送信可能か
+        /// </summary>
+        private bool canSend = false;
+
         #endregion
 
         #region Properties
@@ -341,8 +346,6 @@ namespace Bve2Tims
         /// </summary>
         private void NativeOpened(object sender, EventArgs e)
         {
-
-            udpControl = new Udp();
             canSend = true;
         }
 
