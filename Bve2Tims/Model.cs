@@ -212,14 +212,17 @@ namespace Bve2Tims
         /// </summary>
         internal void Tick()
         {
-            var message = GetVehicleState();
-            Debug.WriteLine($"Message: {message}");
-            foreach (var dest in destinations)
+            if (canSend)
             {
-                if (dest.Status)
+                var message = GetVehicleState();
+                Debug.WriteLine($"Message: {message}");
+                foreach (var dest in destinations)
                 {
-                    Debug.WriteLine($"Send: {dest.DestinationAddr}:{dest.DestinationPort}");
-                    dest.Send(message);
+                    if (dest.Status)
+                    {
+                        dest.Send(message);
+                        Debug.WriteLine($"Send: {dest.DestinationAddr}:{dest.DestinationPort}");
+                    }
                 }
             }
         }
