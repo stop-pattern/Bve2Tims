@@ -21,9 +21,6 @@ namespace Bve2Tims
     {
         #region const/static Fields
 
-        public static int originPort = 0;
-        public static int destinationPort = 0;
-
         private const int unitNumber = 3;
         private const int doorNumber = 10;
 
@@ -41,10 +38,6 @@ namespace Bve2Tims
         #endregion
 
         #region Fields
-
-        private bool autoStart = true;
-
-        private bool status = false;
 
         private int selectedDestinationIndex;
 
@@ -201,15 +194,6 @@ namespace Bve2Tims
                     Debug.WriteLine($"Send: {dest.DestinationAddr}:{dest.DestinationPort}");
                     dest.Send(message);
                 }
-            }
-        }
-
-        internal void Send(string data)
-        {
-            byte[] buffer = Encoding.UTF8.GetBytes(data);
-            foreach (Udp udp in destinations)
-            {
-                udp.Item1.Send(buffer, buffer.Length, udp.Item2);
             }
         }
 
