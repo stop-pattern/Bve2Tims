@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 
 namespace Bve2Tims
 {
@@ -59,6 +60,7 @@ namespace Bve2Tims
         /// <summary>
         /// 通信状態
         /// </summary>
+        [XmlIgnore]
         public bool Status
         {
             get
@@ -75,6 +77,7 @@ namespace Bve2Tims
         /// <summary>
         /// 自動起動
         /// </summary>
+        [XmlElement]
         public bool AutoStart
         {
             get
@@ -91,6 +94,7 @@ namespace Bve2Tims
         /// <summary>
         /// 送信先アドレス
         /// </summary>
+        [XmlElement("Address")]
         public string DestinationAddr
         {
             get
@@ -107,6 +111,7 @@ namespace Bve2Tims
         /// <summary>
         /// 送信先ポート
         /// </summary>
+        [XmlElement("Port")]
         public int DestinationPort
         {
             get
