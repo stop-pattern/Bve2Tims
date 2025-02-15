@@ -23,14 +23,14 @@ namespace Bve2Tims
         /// </summary>
         private static int source_port = 2331;
 
-        /// <summary>
-        /// 受信ポート
-        /// </summary>
-        private static int destination_port = 2330;
-
         #endregion
 
         #region Fields
+
+        /// <summary>
+        /// 受信ポート
+        /// </summary>
+        private int destination_port = 2330;
 
         /// <summary>
         /// 通信状態
