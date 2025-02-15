@@ -11,7 +11,9 @@ using System.Runtime.CompilerServices;
 
 namespace Bve2Tims
 {
-    internal class ViewModel
+    using Udp = Tuple<UdpClient, IPEndPoint>;
+
+    internal class ViewModel : INotifyPropertyChanged
     {
         #region Fields
 
@@ -202,5 +204,22 @@ namespace Bve2Tims
             model = new Model();
         }
 
+        #region INotifyPropertyChanged
+
+        /// <summary>
+        /// プロパティ変更通知イベント
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// プロパティ変更通知
+        /// </summary>
+        /// <param name="propertyName">プロパティ名</param>
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
     }
 }
