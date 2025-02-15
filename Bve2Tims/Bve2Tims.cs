@@ -137,7 +137,7 @@ namespace Bve2Tims
         {
             cmx = Extensions.GetExtension<IContextMenuHacker>();
 
-            model.Initialize(Extensions.GetExtension<INative>());
+            model.Initialize(BveHacker,  Extensions.GetExtension<INative>());
 
             setting = cmx.AddCheckableMenuItem("TIMS連携設定", MenuItemCheckedChanged, ContextMenuItemType.CoreAndExtensions);
         }

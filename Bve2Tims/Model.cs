@@ -55,6 +55,11 @@ namespace Bve2Tims
         private ObservableCollection<Udp> destinations = new ObservableCollection<Udp>();
 
         /// <summary>
+        /// BveHacker
+        /// </summary>
+        private IBveHacker bveHacker;
+
+        /// <summary>
         /// Native
         /// </summary>
         private INative native;
@@ -165,10 +170,15 @@ namespace Bve2Tims
         /// <summary>
         /// 初期化
         /// </summary>
-        /// <param name="native"><see cref="INative"/></param>
-        internal void Initialize(INative native)
+        /// <param name="hacker"><see cref="IBveHacker"/> インスタンス</param>
+        /// <param name="native"><see cref="INative"/> インスタンス</param>
+        internal void Initialize(IBveHacker hacker, INative native)
         {
-            if (native == null)
+            if (hacker == null)
+            {
+                throw new ArgumentNullException(nameof(hacker));
+            }
+            else if (native == null)
             {
                 throw new ArgumentNullException(nameof(native));
             }
