@@ -18,7 +18,7 @@ namespace Bve2Tims
     {
         #region Fields
 
-        private Model model;
+        private readonly Model model;
 
         #endregion
 

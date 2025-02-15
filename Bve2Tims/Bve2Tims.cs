@@ -50,7 +50,7 @@ namespace Bve2Tims
         /// <summary>
         /// 設定ウィンドウ
         /// </summary>
-        private SettingWindow settingWindow;
+        private readonly SettingWindow settingWindow;
 
         /// <summary>
         /// プラグインの有効・無効状態
@@ -60,7 +60,7 @@ namespace Bve2Tims
         /// <summary>
         /// メイン処理を受け持つクラス
         /// </summary>
-        private Model model;
+        private readonly Model model;
 
         #endregion
 

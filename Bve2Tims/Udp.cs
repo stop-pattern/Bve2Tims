@@ -50,7 +50,7 @@ namespace Bve2Tims
         /// <summary>
         /// UDPクライアント
         /// </summary>
-        private UdpClient client = new UdpClient(source_port, AddressFamily.InterNetwork);
+        private readonly UdpClient client;
 
         /// <summary>
         /// データ送信
