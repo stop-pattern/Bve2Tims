@@ -108,13 +108,9 @@ namespace Bve2Tims
         {
             settingWindow.Close();
 
+            settingWindow.Closing -= SettingWindowClosing;
+            Extensions.AllExtensionsLoaded -= AllExtensionsLoaded;
             setting.CheckedChanged -= MenuItemCheckedChanged;
-            native.Opened -= NativeOpened;
-            native.Closed -= NativeClosed;
-
-            udpControl.Dispose();
-            udpControl = null;
-            native = null;
         }
 
         /// <summary>
@@ -123,7 +119,7 @@ namespace Bve2Tims
         /// <param name="elapsed">前回フレームからの経過時間</param>
         public override void Tick(TimeSpan elapsed)
         {
-                            }
+        }
 
         #endregion
 
