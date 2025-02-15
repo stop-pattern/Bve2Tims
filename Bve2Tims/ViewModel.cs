@@ -269,10 +269,10 @@ namespace Bve2Tims
         /// </summary>
         public ObservableCollection<Udp> Destinations
         {
-            get { return new ObservableCollection<Udp>(model.Destinations); }
+            get { return model.Destinations; }
             set
             {
-                model.Destinations = new List<Udp>(value);
+                model.Destinations = value;
                 NotifyPropertyChanged();
             }
         }

@@ -49,7 +49,7 @@ namespace Bve2Tims
 
         private Udp selectedDestination;
 
-        private List<Udp> destinations = new List<Udp>();
+        private ObservableCollection<Udp> destinations = new ObservableCollection<Udp>();
 
         /// <summary>
         /// Native
@@ -120,7 +120,7 @@ namespace Bve2Tims
         /// <summary>
         /// 宛先リスト
         /// </summary>
-        internal List<Udp> Destinations
+        internal ObservableCollection<Udp> Destinations
         {
             get
             {
@@ -138,7 +138,7 @@ namespace Bve2Tims
 
         internal Model()
         {
-            destinations = new List<Udp>();
+            destinations = new ObservableCollection<Udp>();
         }
 
         #endregion
