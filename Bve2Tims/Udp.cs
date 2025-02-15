@@ -134,6 +134,7 @@ namespace Bve2Tims
         /// </summary>
         public Udp()
         {
+            client = new UdpClient(source_port, AddressFamily.InterNetwork);
             remoteEP = new IPEndPoint(IPAddress.Loopback, destination_port);
         }
 
