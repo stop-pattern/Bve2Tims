@@ -170,7 +170,7 @@ namespace Bve2Tims
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        internal Model(List<Udp> udps)
+        internal Model(Udp[] udps)
         {
             destinations = new ObservableCollection<Udp>(udps);
         }
