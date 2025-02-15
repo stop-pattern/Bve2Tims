@@ -50,11 +50,6 @@ namespace Bve2Tims
         /// </summary>
         private INative native;
 
-        /// <summary>
-        /// UDP
-        /// </summary>
-        private Udp udpControl;
-
         #endregion
 
         #region Properties
