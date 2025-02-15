@@ -12,7 +12,6 @@ using BveEx.Extensions.Native;
 using BveEx.Extensions.ContextMenuHacker;
 using BveEx.PluginHost.Plugins;
 using BveEx.PluginHost.Plugins.Extensions;
-using BveTypes.ClassWrappers;
 
 namespace Bve2Tims
 {
