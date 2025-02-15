@@ -5,6 +5,8 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Bve2Tims
 {
@@ -12,7 +14,7 @@ namespace Bve2Tims
     /// UDP通信クラス
     /// 送信先とそのポートを保持する
     /// </summary>
-    public class Udp
+    public class Udp : INotifyPropertyChanged
     {
         #region Fields
 
@@ -151,6 +153,24 @@ namespace Bve2Tims
             //client.Send(sendBytes, sendBytes.Length);
             //client.Close();
             client.BeginSend(sendBytes, sendBytes.Length, remoteEP, null, null);
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged
+
+        /// <summary>
+        /// プロパティ変更通知イベント
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// プロパティ変更通知
+        /// </summary>
+        /// <param name="propertyName">プロパティ名</param>
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion
