@@ -201,6 +201,7 @@ namespace Bve2Tims
                 native.Closed -= NativeClosed;
             }
 
+            this.bveHacker = hacker;
             this.native = native;
 
             native.Opened += NativeOpened;
