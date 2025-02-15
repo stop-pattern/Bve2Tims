@@ -28,11 +28,6 @@ namespace Bve2Tims
         #region Fields
 
         /// <summary>
-        /// 受信ポート
-        /// </summary>
-        private int destination_port = 2330;
-
-        /// <summary>
         /// 通信状態
         /// </summary>
         private bool status = false;
@@ -41,11 +36,6 @@ namespace Bve2Tims
         /// 自動起動
         /// </summary>
         private bool autoStart = false;
-
-        /// <summary>
-        /// 送信先アドレス
-        /// </summary>
-        private string destination_addr = "127.0.0.1";
 
         /// <summary>
         /// UDPクライアント
@@ -100,11 +90,11 @@ namespace Bve2Tims
         {
             get
             {
-                return destination_addr;
+                return remoteEP.Address.ToString();
             }
             set
             {
-                destination_addr = value;
+                remoteEP.Address = IPAddress.Parse(value);
                 NotifyPropertyChanged();
             }
         }
@@ -116,11 +106,11 @@ namespace Bve2Tims
         {
             get
             {
-                return destination_port;
+                return remoteEP.Port;
             }
             set
             {
-                destination_port = value;
+                remoteEP.Port = value;
                 NotifyPropertyChanged();
             }
         }
@@ -161,9 +151,9 @@ namespace Bve2Tims
         /// <param name="address">IPアドレス</param>
         public void Connect(string address)
         {
-            destination_addr = address;
-            remoteEP = new IPEndPoint(IPAddress.Parse(destination_addr), destination_port);
+            remoteEP.Address = IPAddress.Parse(address);
         }
+
 
         /// <summary>
         /// データ送信
