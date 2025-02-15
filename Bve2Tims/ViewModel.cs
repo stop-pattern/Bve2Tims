@@ -11,6 +11,9 @@ using System.Runtime.CompilerServices;
 
 namespace Bve2Tims
 {
+    /// <summary>
+    /// View-Model間の橋渡しを行うクラス
+    /// </summary>
     public class ViewModel : INotifyPropertyChanged
     {
         #region Fields

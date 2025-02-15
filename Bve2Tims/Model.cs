@@ -12,6 +12,10 @@ using BveTypes.ClassWrappers;
 
 namespace Bve2Tims
 {
+    /// <summary>
+    /// メイン処理を受け持つクラス
+    /// シングルトンではないがインスタンスは1つしか生成しない
+    /// </summary>
     public class Model
     {
         #region const/static Fields
