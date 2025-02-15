@@ -15,7 +15,7 @@ namespace Bve2Tims
 
         #endregion
 
-        #region Properties
+        #region Static Properties
 
         public string Unit0
         {
@@ -140,6 +140,54 @@ namespace Bve2Tims
         {
             get { return Model.DoorIndexes.ElementAtOrDefault(15).ToString(); }
             set { Model.DoorIndexes[15] = int.Parse(value); }
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// ユニットインデックス
+        /// </summary>
+        public bool AutoStart
+        {
+            get { return model.AutoStart; }
+            set { model.AutoStart = value; }
+        }
+
+        /// <summary>
+        /// 通信状態
+        /// </summary>
+        public bool Status
+        {
+            get { return model.Status; }
+        }
+
+        /// <summary>
+        /// 選択中の宛先インデックス
+        /// </summary>
+        public int SelectedDestinationIndex
+        {
+            get { return model.SelectedDestinationIndex; }
+            set { model.SelectedDestinationIndex = value; }
+        }
+
+        /// <summary>
+        /// 選択中の宛先
+        /// </summary>
+        public Udp SelectedDestination
+        {
+            get { return model.SelectedDestination; }
+            set { model.SelectedDestination = value; }
+        }
+
+        /// <summary>
+        /// 宛先リスト
+        /// </summary>
+        public ObservableCollection<Udp> Destinations
+        {
+            get { return new ObservableCollection<Udp>(model.Destinations); }
+            set { model.Destinations = new List<Udp>(value); }
         }
 
         #endregion
