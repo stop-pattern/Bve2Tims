@@ -73,6 +73,7 @@ namespace Bve2Tims
             set
             {
                 status = value;
+                NotifyPropertyChanged();
             }
         }
 
@@ -88,6 +89,7 @@ namespace Bve2Tims
             set
             {
                 autoStart = value;
+                NotifyPropertyChanged();
             }
         }
 
@@ -103,6 +105,7 @@ namespace Bve2Tims
             set
             {
                 destination_addr = value;
+                NotifyPropertyChanged();
             }
         }
 
@@ -118,6 +121,7 @@ namespace Bve2Tims
             set
             {
                 destination_port = value;
+                NotifyPropertyChanged();
             }
         }
 
