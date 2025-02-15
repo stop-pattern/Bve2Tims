@@ -164,7 +164,7 @@ namespace Bve2Tims
         /// </summary>
         internal Model()
         {
-            destinations = new ObservableCollection<Udp>();
+            destinations = new ObservableCollection<Udp> { new Udp() };
         }
 
         /// <summary>
