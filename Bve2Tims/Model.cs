@@ -353,6 +353,14 @@ namespace Bve2Tims
         private void NativeOpened(object sender, EventArgs e)
         {
             canSend = true;
+
+            foreach (var dest in destinations)
+            {
+                if (dest.AutoStart)
+                {
+                    dest.Status = true;
+                }
+            }   
         }
 
         /// <summary>
@@ -361,6 +369,14 @@ namespace Bve2Tims
         private void NativeClosed(object sender, EventArgs e)
         {
             canSend = false;
+
+            foreach (var dest in destinations)
+            {
+                if (dest.AutoStart)
+                {
+                    dest.Status = false;
+                }
+            }
         }
 
         #endregion
