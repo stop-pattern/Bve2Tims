@@ -33,6 +33,16 @@ namespace Bve2Tims
         #region Fields
 
         /// <summary>
+        /// 通信状態
+        /// </summary>
+        private bool status = false;
+
+        /// <summary>
+        /// 自動起動
+        /// </summary>
+        private bool autoStart = false;
+
+        /// <summary>
         /// 送信先アドレス
         /// </summary>
         private string destination_addr = "127.0.0.1";
@@ -59,6 +69,10 @@ namespace Bve2Tims
             get
             {
                 return status;
+            }
+            set
+            {
+                status = value;
             }
         }
 
