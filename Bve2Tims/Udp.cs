@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
+using BveEx.Diagnostics;
 
 namespace Bve2Tims
 {
@@ -107,7 +108,15 @@ namespace Bve2Tims
             }
             set
             {
-                remoteEP.Address = IPAddress.Parse(value);
+                try
+                {
+                    remoteEP.Address = IPAddress.Parse(value);
+                }
+                catch (Exception e)
+                {
+                    ErrorDialog.Show(new ErrorDialogInfo("アドレスが間違っています", e.Source, e.Message));
+                }
+
                 NotifyPropertyChanged();
             }
         }
@@ -124,6 +133,14 @@ namespace Bve2Tims
             }
             set
             {
+                try
+                {
+                    remoteEP.Port = value;
+                }
+                catch (Exception e)
+                {
+                    ErrorDialog.Show(new ErrorDialogInfo("ポートが間違っています", e.Source, e.Message));
+                }
                 remoteEP.Port = value;
                 NotifyPropertyChanged();
             }
