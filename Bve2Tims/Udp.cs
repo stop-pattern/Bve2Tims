@@ -69,6 +69,10 @@ namespace Bve2Tims
             }
             set
             {
+                if (value)
+                {
+                    if (remoteEP.Address == null || remoteEP.Port == 0) return;
+                }
                 status = value;
                 NotifyPropertyChanged();
             }
