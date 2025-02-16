@@ -34,7 +34,7 @@ namespace Bve2Tims
         /// UDP通信の設定
         /// </summary>
         [XmlArray]
-        [XmlArrayItem("Index")]
+        [XmlArrayItem("UDPSetting")]
         public Udp[] Udps { get; set; }
 
         /// <summary>
