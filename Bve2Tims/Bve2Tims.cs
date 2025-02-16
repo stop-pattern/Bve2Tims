@@ -87,7 +87,7 @@ namespace Bve2Tims
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
             Debug.AutoFlush = true;
 
-            model = new Model();
+            model = SettingManager.Load();
             settingWindow = new SettingWindow(new ViewModel(model));
             settingWindow.Hide();
 
@@ -110,6 +110,8 @@ namespace Bve2Tims
             settingWindow.Closing -= SettingWindowClosing;
             Extensions.AllExtensionsLoaded -= AllExtensionsLoaded;
             setting.CheckedChanged -= MenuItemCheckedChanged;
+
+            SettingManager.Save(model);
         }
 
         /// <summary>
