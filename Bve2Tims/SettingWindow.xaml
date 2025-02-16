@@ -146,7 +146,7 @@
                           SelectionMode="Single"
                           SelectedIndex="{Binding SelectedDestinationIndex}"
                           SelectedItem="{Binding SelectedDestination, Mode=TwoWay}"
-                          ItemsSource="{Binding Destinations}">
+                          ItemsSource="{Binding Destinations, Mode=TwoWay}">
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Header="Status" Width="*" Binding="{Binding Status}"/>
                         <DataGridTextColumn Header="IP" Width="3*" Binding="{Binding DestinationAddr}"/>
