@@ -11,10 +11,17 @@
           "BveEx.PluginHost": "2.0.0"
         }
       },
-      "BveEx.PluginHost": {
-        "type": "Transitive",
+      "BveEx.Diagnostics": {
+        "type": "Direct",
+        "requested": "[2.0.0, )",
         "resolved": "2.0.0",
-        "contentHash": "kH1aCuUFISW1/LFyNx1Jm0Y3j9evwzw+w7LLJ+ZUagA4FGLGDRdwPVsa5/vGaySwhOWDXPQdOAi0d0stB2KeZg=="
+        "contentHash": "EbWQN8LVvTev+/0jopO024EekcUaPw9GNEwlQBvcb9SLUmlAyvkvydBzxjdXcZjINAaiHro6PMU6JEdn9nue7g=="
+      },
+      "BveEx.PluginHost": {
+        "type": "Direct",
+        "requested": "[2.0.5.1, )",
+        "resolved": "2.0.5.1",
+        "contentHash": "uwGNOzMV/EEw6Yk8/53IVa3sGBxw88UTA4uUBdlShizWMM0FujEMQJ8JFbsmZTZoYT1lUtU7XDVs6G1HfNgjYA=="
       }
     }
   }

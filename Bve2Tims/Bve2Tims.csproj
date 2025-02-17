@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <PackageReference Include="BveEx.CoreExtensions" Version="2.0.0" />
+    <PackageReference Include="BveEx.Diagnostics" Version="2.0.0" />
+    <PackageReference Include="BveEx.PluginHost" Version="2.0.5.1" />
   </ItemGroup>
 
   <ItemGroup>
