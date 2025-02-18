@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
+using BveEx.Extensions.Native;
+using BveEx.Extensions.ContextMenuHacker;
 using BveEx.PluginHost.Plugins;
 using BveEx.PluginHost.Plugins.Extensions;
 
@@ -19,10 +25,46 @@ namespace Bve2Tims
     [Togglable]
     internal class ExtensionMain : AssemblyPluginBase, ITogglableExtension, IExtension
     {
+        #region Plugin Settings
+
+        /// <inheritdoc/>
+        public override string Title { get; } = "TIMS連携";
+        /// <inheritdoc/>
+        public override string Description { get; } = "BVEとTIMSソフトを連携";
+
+        #endregion
+
+        #region Fields
+
+        /// <summary>
+        /// 右クリックメニュー操作用
+        /// ContextMenuHacker
+        /// </summary>
+        private IContextMenuHacker cmx;
+
+        /// <summary>
+        /// 右クリックメニューの設定ボタン
+        /// </summary>
+        private ToolStripMenuItem setting;
+
+        /// <summary>
+        /// 設定ウィンドウ
+        /// </summary>
+        private readonly SettingWindow settingWindow;
+
         /// <summary>
         /// プラグインの有効・無効状態
         /// </summary>
         private bool status = true;
+
+        /// <summary>
+        /// メイン処理を受け持つクラス
+        /// </summary>
+        private readonly Model model;
+
+        #endregion
+
+        #region Properties
 
         /// <inheritdoc/>
         public bool IsEnabled
@@ -30,6 +72,11 @@ namespace Bve2Tims
             get { return status; }
             set { status = value; }
         }
+
+        #endregion
+
+        #region Constructor
+
         /// <summary>
         /// プラグインが読み込まれた時に呼ばれる
         /// 初期化を実装する
@@ -37,7 +84,20 @@ namespace Bve2Tims
         /// <param name="builder"></param>
         public ExtensionMain(PluginBuilder builder) : base(builder)
         {
+            Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            Debug.AutoFlush = true;
+
+            model = new Model();
+            //settingWindow = new SettingWindow(new ViewModel(model));
+            //settingWindow.Hide();
+
+            Extensions.AllExtensionsLoaded += AllExtensionsLoaded;
+            //settingWindow.Closing += SettingWindowClosing;
         }
+
+        #endregion
+
+        #region Inheritance Methods
 
         /// <summary>
         /// プラグインが解放されたときに呼ばれる
@@ -45,6 +105,13 @@ namespace Bve2Tims
         /// </summary>
         public override void Dispose()
         {
+            model.Dispose();
+
+            //settingWindow.Close();
+
+            //settingWindow.Closing -= SettingWindowClosing;
+            Extensions.AllExtensionsLoaded -= AllExtensionsLoaded;
+            setting.CheckedChanged -= MenuItemCheckedChanged;
         }
 
         /// <summary>
@@ -55,8 +122,63 @@ namespace Bve2Tims
         {
             if (status)
             {
-                // 処理を実装
+                model.Tick();
             }
         }
+
+        #endregion
+
+        #region Eevent Handlers
+        
+        /// <summary>
+        /// すべての拡張機能が読み込まれたときに呼ばれる
+        /// </summary>
+        /// <param name="sender"></param>
+        private void AllExtensionsLoaded(object sender, EventArgs e)
+        {
+            cmx = Extensions.GetExtension<IContextMenuHacker>();
+
+            model.Initialize(BveHacker,  Extensions.GetExtension<INative>());
+
+            setting = cmx.AddCheckableMenuItem("TIMS連携設定", MenuItemCheckedChanged, ContextMenuItemType.CoreAndExtensions);
+        }
+
+        /// <summary>
+        /// メニューのチェック状態が変更されたときに呼ばれる
+        /// </summary>
+        /// <param name="sender"></param>
+        private void MenuItemCheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is ToolStripMenuItem item)
+            {
+                model.SetStatus(item.Checked);
+                //if (item.Checked)
+                //    settingWindow.Show();
+                //else
+                //    settingWindow.Hide();
+            }
+        }
+
+        /// <summary>
+        /// 設定ウィンドウが閉じられたときに呼ばれる
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void SettingWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (sender is SettingWindow window)
+            {
+                e.Cancel = true;
+                window.Hide();
+                setting.Checked = false;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
     }
 }
