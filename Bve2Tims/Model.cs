@@ -59,7 +59,7 @@ namespace Bve2Tims
         /// <summary>
         /// 宛先リスト
         /// </summary>
-        private ObservableCollection<Udp> destinations = new ObservableCollection<Udp>();
+        private ObservableCollection<Udp> destinations;
 
         /// <summary>
         /// BveHacker
@@ -172,6 +172,15 @@ namespace Bve2Tims
         /// </summary>
         internal Model(List<Udp> udps)
         {
+            if (udps == null)
+            {
+                throw new ArgumentNullException(nameof(udps));
+            }
+
+            if (udps.Count == 0)
+            {
+                udps.Add(new Udp());
+            }
             destinations = new ObservableCollection<Udp>(udps);
         }
 
