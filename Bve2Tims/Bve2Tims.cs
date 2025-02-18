@@ -149,6 +149,7 @@ namespace Bve2Tims
         {
             if (sender is ToolStripMenuItem item)
             {
+                model.SetStatus(item.Checked);
                 //if (item.Checked)
                 //    settingWindow.Show();
                 //else

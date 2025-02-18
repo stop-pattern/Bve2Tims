@@ -352,13 +352,25 @@ namespace Bve2Tims
             }
         }
 
+        /// <summary>
+        /// 送受信状態を設定
+        /// </summary>
+        /// <param name="status">状態</param>
+        public void SetStatus(bool status)
+        {
+            foreach (var dest in destinations)
+            {
+                dest.Status = status;
+            }
+        }
+
         #endregion
 
-        #region Eevent Handlers
+            #region Eevent Handlers
 
-        /// <summary>
-        /// <see cref="Native"/> が利用可能になったときに呼ばれる
-        /// </summary>
+            /// <summary>
+            /// <see cref="Native"/> が利用可能になったときに呼ばれる
+            /// </summary>
         private void NativeOpened(object sender, EventArgs e)
         {
             canSend = true;
