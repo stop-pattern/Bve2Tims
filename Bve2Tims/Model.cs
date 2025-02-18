@@ -17,7 +17,7 @@ namespace Bve2Tims
     /// メイン処理を受け持つクラス
     /// シングルトンではないがインスタンスは1つしか生成しない
     /// </summary>
-    public class Model
+    public class Model: IDisposable
     {
         #region const/static Fields
 
@@ -59,7 +59,7 @@ namespace Bve2Tims
         /// <summary>
         /// 宛先リスト
         /// </summary>
-        private ObservableCollection<Udp> destinations = new ObservableCollection<Udp>();
+        private ObservableCollection<Udp> destinations;
 
         /// <summary>
         /// BveHacker
@@ -172,6 +172,15 @@ namespace Bve2Tims
         /// </summary>
         internal Model(List<Udp> udps)
         {
+            if (udps == null)
+            {
+                throw new ArgumentNullException(nameof(udps));
+            }
+
+            if (udps.Count == 0)
+            {
+                udps.Add(new Udp());
+            }
             destinations = new ObservableCollection<Udp>(udps);
         }
 
@@ -343,6 +352,18 @@ namespace Bve2Tims
             }
         }
 
+        /// <summary>
+        /// 送受信状態を設定
+        /// </summary>
+        /// <param name="status">状態</param>
+        public void SetStatus(bool status)
+        {
+            foreach (var dest in destinations)
+            {
+                dest.Status = status;
+            }
+        }
+
         #endregion
 
         #region Eevent Handlers
@@ -377,6 +398,40 @@ namespace Bve2Tims
                     dest.Status = false;
                 }
             }
+        }
+
+        #endregion
+
+        #region IDisposable Support
+
+        /// <summary>
+        /// 重複する呼び出しを検出する
+        /// </summary>
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (destinations != null || destinations.Count == 0)
+                    {
+                        foreach (var dest in destinations)
+                        {
+                            dest.Dispose();
+                        }
+                    }
+                    native.Opened -= NativeOpened;
+                    native.Closed -= NativeClosed;
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
 
         #endregion

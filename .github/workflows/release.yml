@@ -20,9 +20,9 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4.0.0
       - name: Restore nuget packages
-        run: dotnet restore BveExCsTemplate.sln --locked-mode
+        run: dotnet restore Bve2Tims.sln --locked-mode
       - name: Build sln
-        run: dotnet publish .\BveExCsTemplate.sln --configuration Release --no-restore /p:platform="Any CPU" /p:OutputPath="./out/"
+        run: dotnet publish .\Bve2Tims.sln --configuration Release --no-restore /p:platform="Any CPU" /p:OutputPath="./out/"
       - name: Collect artifact
         run: |
           mkdir plugins/
@@ -41,7 +41,7 @@ jobs:
           }
         shell: pwsh
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: plugins
           path: ./plugins/
