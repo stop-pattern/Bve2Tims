@@ -88,11 +88,11 @@ namespace Bve2Tims
             Debug.AutoFlush = true;
 
             model = new Model();
-            settingWindow = new SettingWindow(new ViewModel(model));
-            settingWindow.Hide();
+            //settingWindow = new SettingWindow(new ViewModel(model));
+            //settingWindow.Hide();
 
             Extensions.AllExtensionsLoaded += AllExtensionsLoaded;
-            settingWindow.Closing += SettingWindowClosing;
+            //settingWindow.Closing += SettingWindowClosing;
         }
 
         #endregion
@@ -105,9 +105,9 @@ namespace Bve2Tims
         /// </summary>
         public override void Dispose()
         {
-            settingWindow.Close();
+            //settingWindow.Close();
 
-            settingWindow.Closing -= SettingWindowClosing;
+            //settingWindow.Closing -= SettingWindowClosing;
             Extensions.AllExtensionsLoaded -= AllExtensionsLoaded;
             setting.CheckedChanged -= MenuItemCheckedChanged;
         }
@@ -149,10 +149,10 @@ namespace Bve2Tims
         {
             if (sender is ToolStripMenuItem item)
             {
-                if (item.Checked)
-                    settingWindow.Show();
-                else
-                    settingWindow.Hide();
+                //if (item.Checked)
+                //    settingWindow.Show();
+                //else
+                //    settingWindow.Hide();
             }
         }
 
