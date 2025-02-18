@@ -105,6 +105,8 @@ namespace Bve2Tims
         /// </summary>
         public override void Dispose()
         {
+            model.Dispose();
+
             //settingWindow.Close();
 
             //settingWindow.Closing -= SettingWindowClosing;

@@ -148,7 +148,7 @@ namespace Bve2Tims
         /// </summary>
         public void Dispose()
         {
-            client.Close();
+            client.Dispose();
         }
 
         /// <summary>

@@ -17,7 +17,7 @@ namespace Bve2Tims
     /// メイン処理を受け持つクラス
     /// シングルトンではないがインスタンスは1つしか生成しない
     /// </summary>
-    public class Model
+    public class Model: IDisposable
     {
         #region const/static Fields
 
@@ -366,11 +366,11 @@ namespace Bve2Tims
 
         #endregion
 
-            #region Eevent Handlers
+        #region Eevent Handlers
 
-            /// <summary>
-            /// <see cref="Native"/> が利用可能になったときに呼ばれる
-            /// </summary>
+        /// <summary>
+        /// <see cref="Native"/> が利用可能になったときに呼ばれる
+        /// </summary>
         private void NativeOpened(object sender, EventArgs e)
         {
             canSend = true;
@@ -398,6 +398,40 @@ namespace Bve2Tims
                     dest.Status = false;
                 }
             }
+        }
+
+        #endregion
+
+        #region IDisposable Support
+
+        /// <summary>
+        /// 重複する呼び出しを検出する
+        /// </summary>
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (destinations != null || destinations.Count == 0)
+                    {
+                        foreach (var dest in destinations)
+                        {
+                            dest.Dispose();
+                        }
+                    }
+                    native.Opened -= NativeOpened;
+                    native.Closed -= NativeClosed;
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
 
         #endregion
