@@ -139,6 +139,7 @@ namespace Bve2Tims
         /// <param name="destination">送信先アドレス</param>
         public Udp(string destination) : this()
         {
+            remoteEP.Address = IPAddress.Parse(destination);
             //Connect(destination);
         }
 
